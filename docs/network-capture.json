@@ -1,0 +1,389 @@
+{
+  "capturedAt": "2026-11-13T02:19:51.872Z",
+  "base": "http://127.0.0.1:8000",
+  "viewport": "1440x1000",
+  "home": [
+    {
+      "path": "/",
+      "method": "GET",
+      "status": 200,
+      "type": "Document",
+      "durationMs": 8,
+      "bytes": 13686,
+      "mimeType": "text/html",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-404.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 11,
+      "bytes": 113792,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-shiguang.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 26,
+      "bytes": 146936,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-this-page.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 11,
+      "bytes": 57965,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/css/style.css",
+      "method": "GET",
+      "status": 200,
+      "type": "Stylesheet",
+      "durationMs": 22,
+      "bytes": 40696,
+      "mimeType": "text/css",
+      "failed": false
+    },
+    {
+      "path": "/data/now.json",
+      "method": "GET",
+      "status": 200,
+      "type": "Fetch",
+      "durationMs": 5,
+      "bytes": 394,
+      "mimeType": "application/json",
+      "failed": false
+    },
+    {
+      "path": "/js/main.js",
+      "method": "GET",
+      "status": 200,
+      "type": "Script",
+      "durationMs": 27,
+      "bytes": 5442,
+      "mimeType": "text/javascript",
+      "failed": false
+    }
+  ],
+  "notFound": [
+    {
+      "path": "/",
+      "method": "GET",
+      "status": 200,
+      "type": "Document",
+      "durationMs": 8,
+      "bytes": 13686,
+      "mimeType": "text/html",
+      "failed": false
+    },
+    {
+      "path": "/",
+      "method": "GET",
+      "status": 200,
+      "type": "Document",
+      "durationMs": 9,
+      "bytes": 13686,
+      "mimeType": "text/html",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-404.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 11,
+      "bytes": 113792,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-404.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 6,
+      "bytes": 113792,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-404.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 9,
+      "bytes": 113792,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-404.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 7,
+      "bytes": 113792,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-shiguang.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 26,
+      "bytes": 146936,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-shiguang.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 22,
+      "bytes": 146936,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-shiguang.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 40,
+      "bytes": 146936,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-shiguang.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 26,
+      "bytes": 146936,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-this-page.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 11,
+      "bytes": 57965,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-this-page.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 8,
+      "bytes": 57965,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-this-page.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 6,
+      "bytes": 57965,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/assets/img/cover-this-page.webp",
+      "method": "GET",
+      "status": 200,
+      "type": "Image",
+      "durationMs": 9,
+      "bytes": 57965,
+      "mimeType": "image/webp",
+      "failed": false
+    },
+    {
+      "path": "/css/style.css",
+      "method": "GET",
+      "status": 200,
+      "type": "Stylesheet",
+      "durationMs": 22,
+      "bytes": 40696,
+      "mimeType": "text/css",
+      "failed": false
+    },
+    {
+      "path": "/css/style.css",
+      "method": "GET",
+      "status": 200,
+      "type": "Stylesheet",
+      "durationMs": 14,
+      "bytes": 40696,
+      "mimeType": "text/css",
+      "failed": false
+    },
+    {
+      "path": "/css/style.css",
+      "method": "GET",
+      "status": 200,
+      "type": "Stylesheet",
+      "durationMs": 26,
+      "bytes": 40696,
+      "mimeType": "text/css",
+      "failed": false
+    },
+    {
+      "path": "/css/style.css",
+      "method": "GET",
+      "status": 200,
+      "type": "Stylesheet",
+      "durationMs": 20,
+      "bytes": 40696,
+      "mimeType": "text/css",
+      "failed": false
+    },
+    {
+      "path": "/css/style.css",
+      "method": "GET",
+      "status": 200,
+      "type": "Stylesheet",
+      "durationMs": 21,
+      "bytes": 40696,
+      "mimeType": "text/css",
+      "failed": false
+    },
+    {
+      "path": "/data/now.json",
+      "method": "GET",
+      "status": 200,
+      "type": "Fetch",
+      "durationMs": 5,
+      "bytes": 394,
+      "mimeType": "application/json",
+      "failed": false
+    },
+    {
+      "path": "/data/now.json",
+      "method": "GET",
+      "status": 200,
+      "type": "Fetch",
+      "durationMs": 6,
+      "bytes": 394,
+      "mimeType": "application/json",
+      "failed": false
+    },
+    {
+      "path": "/js/main.js",
+      "method": "GET",
+      "status": 200,
+      "type": "Script",
+      "durationMs": 27,
+      "bytes": 5442,
+      "mimeType": "text/javascript",
+      "failed": false
+    },
+    {
+      "path": "/js/main.js",
+      "method": "GET",
+      "status": 200,
+      "type": "Script",
+      "durationMs": 22,
+      "bytes": 5442,
+      "mimeType": "text/javascript",
+      "failed": false
+    },
+    {
+      "path": "/js/main.js",
+      "method": "GET",
+      "status": 200,
+      "type": "Script",
+      "durationMs": 37,
+      "bytes": 5442,
+      "mimeType": "text/javascript",
+      "failed": false
+    },
+    {
+      "path": "/js/main.js",
+      "method": "GET",
+      "status": 200,
+      "type": "Script",
+      "durationMs": 27,
+      "bytes": 5442,
+      "mimeType": "text/javascript",
+      "failed": false
+    },
+    {
+      "path": "/js/main.js",
+      "method": "GET",
+      "status": 200,
+      "type": "Script",
+      "durationMs": 25,
+      "bytes": 5442,
+      "mimeType": "text/javascript",
+      "failed": false
+    },
+    {
+      "path": "/js/project.js",
+      "method": "GET",
+      "status": 200,
+      "type": "Script",
+      "durationMs": 43,
+      "bytes": 5354,
+      "mimeType": "text/javascript",
+      "failed": false
+    },
+    {
+      "path": "/js/project.js",
+      "method": "GET",
+      "status": 200,
+      "type": "Script",
+      "durationMs": 29,
+      "bytes": 5354,
+      "mimeType": "text/javascript",
+      "failed": false
+    },
+    {
+      "path": "/project.html",
+      "method": "GET",
+      "status": 200,
+      "type": "Document",
+      "durationMs": 6,
+      "bytes": 15052,
+      "mimeType": "text/html",
+      "failed": false
+    },
+    {
+      "path": "/project.html",
+      "method": "GET",
+      "status": 200,
+      "type": "Document",
+      "durationMs": 6,
+      "bytes": 15052,
+      "mimeType": "text/html",
+      "failed": false
+    },
+    {
+      "path": "/this-page-does-not-exist.html",
+      "method": "GET",
+      "status": 404,
+      "type": "Document",
+      "durationMs": 7,
+      "bytes": 3713,
+      "mimeType": "text/html",
+      "failed": false
+    }
+  ]
+}

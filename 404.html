@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 / 这一页走丢了 — 李昊泽</title>
+  <meta name="description" content="这一页走丢了。回到李昊泽的个人主页，或者去看看第一阶段的项目。">
+  <meta name="theme-color" content="#2b44ff">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body class="page-404">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header site-header--blue">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="李昊泽的个人主页">
+        <span class="brand-mark">HZ</span><span class="brand-dot" aria-hidden="true">.</span>
+      </a>
+
+      <nav class="site-nav" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="project.html">项目</a>
+        <a href="index.html#about">关于</a>
+      </nav>
+
+      <a class="header-cta" href="index.html#contact">联系我 <span aria-hidden="true">↗</span></a>
+
+      <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false">
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="sr-only">打开菜单</span>
+      </button>
+    </div>
+
+  </header>
+
+  <div class="mobile-menu" id="site-menu" hidden>
+    <nav aria-label="移动端导航">
+      <a href="index.html"><span>首页</span><small>HOME</small></a>
+      <a href="project.html"><span>项目</span><small>WORK</small></a>
+      <a href="index.html#about"><span>关于</span><small>ABOUT</small></a>
+      <a href="index.html#contact"><span>联系</span><small>CONTACT</small></a>
+    </nav>
+    <p class="mobile-menu-foot">李昊泽 · 前端学习者<br>中国 / UTC+8 · 2026</p>
+  </div>
+
+  <main id="main" class="not-found">
+    <div class="container">
+      <div class="not-found-top">
+        <p class="eyebrow eyebrow--light"><span class="dot" aria-hidden="true"></span>ERROR / 404</p>
+        <p>LOST &amp; FOUND</p>
+      </div>
+
+      <h1 aria-label="404">
+        <span>4</span><span class="orange">0</span><span>4</span>
+      </h1>
+
+      <div class="not-found-body">
+        <h2>这一页，<br>走丢了。</h2>
+        <div class="not-found-copy">
+          <p>你访问的地址不存在，或者它已经被搬到别处。别担心，回首页的路还在。</p>
+          <div class="not-found-actions">
+            <a class="button button--light" href="index.html">回到首页 <span class="arrow" aria-hidden="true">↗</span></a>
+            <a class="text-link text-link--light" href="project.html">看看我做过什么 <span aria-hidden="true">→</span></a>
+          </div>
+          <p class="not-found-path">请求路径 <code data-missing-path>/this-page-does-not-exist.html</code></p>
+        </div>
+      </div>
+
+      <p class="not-found-foot"><span aria-hidden="true">✦</span> 404 不是终点，只是一个没有内容的页面。</p>
+    </div>
+  </main>
+
+  <footer class="site-footer site-footer--blue">
+    <div class="container footer-inner">
+      <p>© 2026 李昊泽</p>
+      <p>手写 HTML / CSS / JS · 无框架</p>
+      <p>本地时间 <time data-clock>UTC+8</time></p>
+    </div>
+  </footer>
+</body>
+</html>

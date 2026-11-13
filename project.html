@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>项目档案 / 李昊泽 — 三个练习，一次上线</title>
+  <meta name="description" content="李昊泽第一阶段项目档案：拾光专注计时器、这个个人主页，以及一个认真设计的 404 页面。">
+  <meta name="theme-color" content="#f2eee5">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="项目档案 / 李昊泽">
+  <meta property="og:description" content="三个练习，一次上线。原生 HTML / CSS / JS 的项目拆解。">
+  <meta property="og:image" content="assets/img/og-cover.webp">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/project.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="李昊泽的个人主页">
+        <span class="brand-mark">HZ</span><span class="brand-dot" aria-hidden="true">.</span>
+      </a>
+
+      <nav class="site-nav" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="project.html" aria-current="page">项目</a>
+        <a href="index.html#about">关于</a>
+      </nav>
+
+      <a class="header-cta" href="index.html#contact">联系我 <span aria-hidden="true">↗</span></a>
+
+      <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false">
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="sr-only">打开菜单</span>
+      </button>
+    </div>
+
+  </header>
+
+  <div class="mobile-menu" id="site-menu" hidden>
+    <nav aria-label="移动端导航">
+      <a href="index.html"><span>首页</span><small>HOME</small></a>
+      <a href="project.html" aria-current="page"><span>项目</span><small>WORK</small></a>
+      <a href="index.html#about"><span>关于</span><small>ABOUT</small></a>
+      <a href="index.html#contact"><span>联系</span><small>CONTACT</small></a>
+    </nav>
+    <p class="mobile-menu-foot">李昊泽 · 前端学习者<br>中国 / UTC+8 · 2026</p>
+  </div>
+
+  <main id="main">
+    <section class="archive-hero" aria-labelledby="archive-title">
+      <div class="container">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>PROJECT ARCHIVE / 2026</p>
+        <h1 id="archive-title">三个练习，<br><em>一次上线。</em></h1>
+        <div class="archive-intro">
+          <p class="lead">这里记录了第一阶段的三个作品：一个能用的计时器、一个你正在浏览的个人主页，以及一个不太令人沮丧的 404。每个都从一张草图开始，最后落到真实的浏览器里。</p>
+          <dl class="archive-meta">
+            <div><dt>角色</dt><dd>设计 + 开发</dd></div>
+            <div><dt>周期</dt><dd>2026.11 / 7 天</dd></div>
+            <div><dt>技术</dt><dd>HTML / CSS / JS</dd></div>
+            <div><dt>状态</dt><dd><i class="live-dot" aria-hidden="true"></i>LIVE</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <nav class="case-nav" aria-label="项目目录">
+      <div class="container case-nav-inner">
+        <a href="#shiguang" data-case-link aria-current="location"><span>01</span>拾光<small>交互</small></a>
+        <a href="#this-page" data-case-link><span>02</span>这一页<small>页面</small></a>
+        <a href="#not-found" data-case-link><span>03</span>404<small>错误页</small></a>
+      </div>
+    </nav>
+
+    <article class="case" id="shiguang" aria-labelledby="shiguang-title">
+      <div class="container">
+        <header class="case-head">
+          <div>
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span>01 / INTERACTION</p>
+            <h2 id="shiguang-title">拾光 <span>SHIGUANG</span></h2>
+          </div>
+          <p class="case-tagline">把 25 分钟，<br>还给自己。</p>
+        </header>
+
+        <figure class="case-cover">
+          <img src="assets/img/cover-shiguang.webp" alt="拾光专注计时器的深色封面，橙色圆环里写着 25:00" width="1200" height="900" loading="eager" decoding="async">
+        </figure>
+
+        <div class="case-grid">
+          <div class="case-body">
+            <h3>项目简介</h3>
+            <p>拾光是一个极简的专注计时器：选择 25 或 5 分钟，按下开始，看着圆环一点点收紧。没有排行榜，没有声音，也没有“你必须专注”的弹窗。它只做一件事——把时间还给你。</p>
+
+            <h3>为什么做它</h3>
+            <p>我想练的不是“做一个计时器”，而是 DOM 更新、事件状态和界面反馈之间的关系。一个按钮在不同状态下要说什么、圆环应该怎么走、重置时如何不留下多余的定时器，这些细节比界面本身更难。</p>
+
+            <h3>我做了什么</h3>
+            <ol class="feature-list">
+              <li>
+                <span>01</span>
+                <div><h4>两种时长，随时切换</h4><p>25 分钟与 5 分钟共用一套倒计时逻辑，切换时自动停下并重置，不会出现两个计时器同时跑。</p></div>
+              </li>
+              <li>
+                <span>02</span>
+                <div><h4>一个按钮，三种状态</h4><p>开始、暂停、继续。状态写在按钮文字和 <code>aria-live</code> 提示里，不依赖颜色单独传达。</p></div>
+              </li>
+              <li>
+                <span>03</span>
+                <div><h4>用圆环表达剩余时间</h4><p>SVG 圆环通过 <code>stroke-dashoffset</code> 跟随剩余时间，数字用等宽数字，读秒时不会左右跳动。</p></div>
+              </li>
+            </ol>
+          </div>
+
+          <aside class="case-side" aria-label="拾光项目信息">
+            <dl class="meta-list">
+              <div><dt>类型</dt><dd>交互练习 / 01</dd></div>
+              <div><dt>角色</dt><dd>设计 + 开发</dd></div>
+              <div><dt>技术</dt><dd>HTML · CSS · Vanilla JS</dd></div>
+              <div><dt>重点</dt><dd>DOM 状态、SVG、定时器</dd></div>
+              <div><dt>状态</dt><dd>可交互演示</dd></div>
+            </dl>
+            <p class="case-note">这一页下方就是可运行的版本。它不是截图，也不是视频——你可以直接按开始。</p>
+          </aside>
+        </div>
+
+        <section class="timer-demo" data-timer aria-labelledby="timer-title">
+          <div class="demo-copy">
+            <p class="eyebrow eyebrow--light"><span class="dot" aria-hidden="true"></span>LIVE DEMO / 直接试</p>
+            <h3 id="timer-title">给自己 5 分钟。</h3>
+            <p>25 分钟太久？先切到 5 分钟。开始后，圆环会跟着剩余时间收紧；暂停时，时间会停住，不会偷偷跑掉。</p>
+            <div class="timer-modes" role="group" aria-label="选择计时时长">
+              <button type="button" data-minutes="25" aria-pressed="true">25 分钟</button>
+              <button type="button" data-minutes="5" aria-pressed="false">5 分钟</button>
+            </div>
+            <p class="demo-status" id="timer-status" aria-live="polite">准备开始</p>
+          </div>
+
+          <div class="timer-widget">
+            <div class="timer-ring">
+              <svg viewBox="0 0 240 240" aria-hidden="true" focusable="false">
+                <circle class="ring-bg" cx="120" cy="120" r="104"></circle>
+                <circle class="ring-progress" id="timer-progress" cx="120" cy="120" r="104"></circle>
+              </svg>
+              <div class="timer-readout">
+                <time id="timer-display" datetime="PT25M">25:00</time>
+                <span>FOCUS / MIN</span>
+              </div>
+            </div>
+            <div class="timer-controls">
+              <button class="button button--lime" type="button" id="timer-toggle">开始</button>
+              <button class="timer-reset" type="button" id="timer-reset">重置</button>
+            </div>
+          </div>
+        </section>
+
+        <div class="case-outro">
+          <p class="outro-label">复盘 / WHAT I LEARNED</p>
+          <div class="outro-grid">
+            <p>计时器让我第一次认真处理“状态”。看起来只是开始和暂停，实际上要同时照顾按钮文案、剩余时间、圆环进度和屏幕阅读器提示。</p>
+            <p>也让我养成了一个习惯：每次写 <code>setInterval</code>，都要先想清楚它什么时候被清掉。否则页面看起来正常，后台却可能藏着第二个、第三个数秒。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="case" id="this-page" aria-labelledby="this-page-title">
+      <div class="container">
+        <header class="case-head">
+          <div>
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span>02 / THIS PAGE</p>
+            <h2 id="this-page-title">这一页 <span>THIS PAGE</span></h2>
+          </div>
+          <p class="case-tagline">用原生，写一个<br>能看的个人主页。</p>
+        </header>
+
+        <figure class="case-cover">
+          <img src="assets/img/cover-this-page.webp" alt="这一页个人主页的浏览器窗口封面，标题为把想法做成能运行的网页" width="1200" height="900" loading="lazy" decoding="async">
+        </figure>
+
+        <div class="case-grid">
+          <div class="case-body">
+            <h3>项目简介</h3>
+            <p>这是你正在浏览的页面，也是我的第一份线上简历。它没有构建步骤，没有框架，只有三个 HTML 文件、一份 CSS 和两份 JavaScript。所有内容都可以在“查看源代码”里找到。</p>
+
+            <h3>三个关键决定</h3>
+            <ol class="decision-list">
+              <li>
+                <span>01</span>
+                <div><h4>先结构，后装饰</h4><p>用 <code>header</code>、<code>nav</code>、<code>main</code>、<code>section</code>、<code>article</code>、<code>footer</code> 把页面搭起来，再加视觉。标题层级、跳转链接和键盘焦点都不是事后补的。</p></div>
+              </li>
+              <li>
+                <span>02</span>
+                <div><h4>375px 也是正式尺寸</h4><p>用 <code>clamp()</code> 控制字号、用 <code>minmax(0, 1fr)</code> 约束网格，再在手机宽度下重排导航和卡片。375px 下没有横向滚动条，也没有文字重叠。</p></div>
+              </li>
+              <li>
+                <span>03</span>
+                <div><h4>交互要有理由</h4><p>项目筛选、移动端菜单、计时器，都先保证没有 JavaScript 时内容仍然可读；再用原生 JS 增强。筛选不是 CSS <code>:hover</code> 的障眼法。</p></div>
+              </li>
+            </ol>
+          </div>
+
+          <aside class="case-side" aria-label="这一页项目信息">
+            <dl class="meta-list">
+              <div><dt>页面</dt><dd>3 个 HTML 文件</dd></div>
+              <div><dt>请求</dt><dd>1 次自定义 fetch</dd></div>
+              <div><dt>框架</dt><dd>0</dd></div>
+              <div><dt>图片</dt><dd>WebP · 单张 &lt; 300 KB</dd></div>
+              <div><dt>控制台</dt><dd>0 个红色报错</dd></div>
+              <div><dt>断点</dt><dd>375 / 768 / 1440</dd></div>
+            </dl>
+            <p class="case-note">“现在”卡片里的内容不是写死在 HTML 里，而是由 <code>data/now.json</code> 通过 fetch 读取；请求失败时会保留静态回退。</p>
+            <a class="text-link text-link--dark" href="docs/network-record.md">查看抓包记录 <span aria-hidden="true">↗</span></a>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <article class="case" id="not-found" aria-labelledby="not-found-title">
+      <div class="container">
+        <header class="case-head">
+          <div>
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span>03 / ERROR PAGE</p>
+            <h2 id="not-found-title">404 <span>LOST &amp; FOUND</span></h2>
+          </div>
+          <p class="case-tagline">迷路了，<br>也要好好说再见。</p>
+        </header>
+
+        <figure class="case-cover">
+          <img src="assets/img/cover-404.webp" alt="蓝色 404 错误页封面，中间有巨大的橙色数字 0" width="1200" height="900" loading="lazy" decoding="async">
+        </figure>
+
+        <div class="case-grid">
+          <div class="case-body">
+            <h3>项目简介</h3>
+            <p>错误页经常是用户唯一会看到的“意外页面”。与其交出一行冷冰冰的 Not Found，不如承认走丢、给出一条回家的路，再留一点品牌记忆。</p>
+
+            <h3>我做了什么</h3>
+            <p>整页只保留三个动作：解释发生了什么、给一个回首页的按钮、给一个去看项目的入口。巨大的 404 负责第一眼，橙色数字负责让人记住，剩下的交给清楚的文案。</p>
+
+            <a class="button button--primary button--inline" href="this-page-does-not-exist.html" target="_blank" rel="noopener">亲自走丢一次 <span class="arrow" aria-hidden="true">↗</span></a>
+            <p class="case-footnote">这个链接会请求一个不存在的地址，返回真正的 404 状态码，并显示自定义错误页。</p>
+          </div>
+
+          <aside class="case-side" aria-label="404 项目信息">
+            <dl class="meta-list">
+              <div><dt>类型</dt><dd>错误页 / 03</dd></div>
+              <div><dt>状态码</dt><dd>404 Not Found</dd></div>
+              <div><dt>技术</dt><dd>HTML · CSS · JS</dd></div>
+              <div><dt>重点</dt><dd>清晰的下一步</dd></div>
+            </dl>
+            <p class="case-note">错误页也继承了站点的响应式规则：375px 下数字会缩小，文案会换行，但不会横向溢出。</p>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <nav class="next-nav" aria-label="项目导航">
+      <div class="container next-nav-inner">
+        <a href="index.html#work"><span aria-hidden="true">←</span> 回到全部项目</a>
+        <a href="#shiguang">再看一遍拾光 <span aria-hidden="true">↑</span></a>
+      </div>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 李昊泽</p>
+      <p>手写 HTML / CSS / JS · 无框架</p>
+      <p>本地时间 <time data-clock>UTC+8</time></p>
+    </div>
+  </footer>
+</body>
+</html>
