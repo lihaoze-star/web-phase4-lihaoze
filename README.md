@@ -6,7 +6,7 @@
 
 - **选题**：任务 1 · 选题一「个人主页」（含项目展示页与 404）
 - **仓库**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
-- **线上地址**：部署后填写，步骤见下方「部署到 GitHub Pages」
+- **线上地址**：<https://lihaoze-star.github.io/web-phase4-lihaoze/>
 - **技术限制**：0 框架 / 0 构建 / 0 依赖，仅原生 HTML、CSS、JavaScript
 
 ---
@@ -108,7 +108,7 @@ web-phase4-lihaoze/
 | 至少 1 处 JS 交互，不能只靠 `:hover` | 筛选、菜单、计时器、`fetch` 共 4 处 | 见「页面与交互」 |
 | 图片压缩后上传，单张 ≤ 300 KB | 4 张 WebP：30.7 KB / 56.4 KB / 110.9 KB / 143.3 KB | `assets/img/` |
 | 控制台不能有红色报错 | 正常页面 0 条；404 页只有一条**故意**请求的 404 资源提示 | 见「自测记录」 |
-| 部署到 HTTPS 公网地址 | GitHub Pages（步骤见下） | 部署后填写 |
+| 部署到 HTTPS 公网地址 | GitHub Pages（`main` 分支 / 根目录） | <https://lihaoze-star.github.io/web-phase4-lihaoze/> |
 | 抓包记录 3 条 + 故意 404 | 主文档、CSS、JS、`fetch` + 一个 404 | [docs/network-record.md](docs/network-record.md) |
 
 ---
@@ -133,7 +133,12 @@ web-phase4-lihaoze/
 
 ## 部署到 GitHub Pages
 
-仓库已经初始化为一个本地 Git 仓库并完成提交，只差一个远程地址。
+已部署：仓库 [`lihaoze-star/web-phase4-lihaoze`](https://github.com/lihaoze-star/web-phase4-lihaoze) 的 `main` 分支根目录，GitHub Pages 自动构建。
+
+- **线上地址**：<https://lihaoze-star.github.io/web-phase4-lihaoze/>
+- **仓库地址**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
+
+从零复现的步骤：
 
 1. 在 GitHub 新建公开仓库 `web-phase4-lihaoze`（不要勾选 README / .gitignore）。
 2. 在项目目录执行：
@@ -153,8 +158,6 @@ web-phase4-lihaoze/
    ```text
    https://lihaoze-star.github.io/web-phase4-lihaoze/
    ```
-
-   把这个地址填回本文开头的「线上地址」。
 
 > 三个页面都使用相对路径，所以部署在 `/web-phase4-lihaoze/` 这样的子路径下也能正常工作。
 > GitHub Pages 会自动把仓库根目录的 `404.html` 用作自定义错误页。
