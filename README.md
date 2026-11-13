@@ -184,6 +184,7 @@ web-phase4-lihaoze/
 - 图片：3 张，全部带 `alt`；WebP 单张最大 143.3 KB。
 - 语义化标签：`header` / `nav` / `main` / `section` / `article` / `footer` 均已使用。
 - 交互自测：筛选切换、菜单开合、计时器 5 分钟开始→暂停→重置均正常；`fetch` 成功后「现在」卡片内容被更新。
+- 线上地址实测（2026-11-13）：首页 / 项目页返回 200，375px 下 `scrollWidth` 均为 375；正常页面 0 条控制台报错；`/this-page-does-not-exist.html` 返回 404 并显示自定义错误页。
 
 重新生成截图与抓包记录（可选，需要本机 Edge 与 Node 22+）：
 
