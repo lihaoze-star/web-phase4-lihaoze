@@ -16,7 +16,7 @@
     // 当前公网 API 由 localhost.run 隧道暴露，换地址时只改这一行。
     baseUrl: isLocal
       ? "http://127.0.0.1:5000"
-      : "https://3a81099704b5d7.app.lhr.life",
+      : "https://8943aa61effd88.app.lhr.life",
     timeoutMs: 8000
   };
 
