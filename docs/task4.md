@@ -3,7 +3,7 @@
 一个真的会逐字返回的对话页：前端用 `fetch` 读 SSE，Flask 在服务端转发 DeepSeek，Key 只在本机 `.env`。
 
 - **对话页**：<https://lihaoze-star.github.io/web-phase4-lihaoze/chat.html>
-- **公网 API**：`https://8943aa61effd88.app.lhr.life/api/chat`（localhost.run 临时隧道）
+- **公网 API**：`https://7c4f0b7772fa15.app.lhr.life/api/chat`（localhost.run 临时隧道）
 - **前端仓库**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
 - **API 仓库**：<https://github.com/lihaoze-star/web-phase4-api-lihaoze>
 - **流式录屏**：[chat-streaming.gif](screenshots/chat-streaming.gif)
