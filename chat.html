@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>和小岸聊聊 / 李昊泽 — 流式对话</title>
-  <meta name="description" content="任务 4：后端转发 DeepSeek，流式输出、三轮上下文、停止生成与可读错误提示。">
+  <title>和小岸聊聊 / 李昊泽 — 流式对话与工具调用</title>
+  <meta name="description" content="任务 4/5：后端转发 DeepSeek，流式输出、三轮上下文、停止生成，以及 add_item / query_items 工具调用。">
   <meta name="theme-color" content="#f2eee5">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
@@ -57,11 +57,11 @@
       <div class="container">
         <div class="chat-hero-grid">
           <div>
-            <p class="eyebrow"><span class="dot" aria-hidden="true"></span>STREAMING / TASK 04</p>
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span>STREAMING + TOOLS / TASK 04–05</p>
             <h1 id="chat-title">和模型，<br><em>聊一会儿。</em></h1>
           </div>
           <div class="chat-hero-copy">
-            <p class="lead">Key 只放在 Flask 服务端的 <code>.env</code> 里。浏览器只拿到流式的 delta，一段一段显示；可以连续追问，也可以随时按“停止生成”。</p>
+            <p class="lead">Key 只放在 Flask 服务端的 <code>.env</code> 里。浏览器只拿到流式的 delta，一段一段显示；小岸还能调用 <code>add_item</code> / <code>query_items</code> 直接改任务清单，右侧日志会看到工具名和参数。</p>
             <p class="chat-api-line">
               <span class="chat-api-dot" aria-hidden="true"></span>
               <span>API</span>
@@ -90,7 +90,7 @@
             <article class="chat-message chat-message--assistant">
               <div class="chat-message-head"><span class="chat-avatar chat-avatar--small" aria-hidden="true">岸</span><span>小岸</span><time>刚刚</time></div>
               <div class="chat-bubble">
-                <p>你好，我是小岸。可以问我 <code>fetch</code>、CORS、SQLite，或者这周四个任务里的任何一步。</p>
+                <p>你好，我是小岸。可以问我 <code>fetch</code>、CORS、SQLite，或者这周五个任务里的任何一步。</p>
                 <p>回答会流式出现，随时可以按“停止生成”。</p>
               </div>
             </article>
@@ -130,6 +130,16 @@
           </dl>
 
           <p class="chat-side-note">系统提示词把角色限定在课程学习与技术问题上，并明确“不编造、不泄露 Key、不代写整份作业”。</p>
+
+          <section class="chat-tools" aria-labelledby="tool-log-title">
+            <div class="chat-tools-head">
+              <p class="eyebrow" id="tool-log-title">TOOL CALLS / 工具日志</p>
+              <span class="chat-tool-count" data-tool-count>0</span>
+            </div>
+            <div class="chat-tool-log" data-tool-log aria-live="polite">
+              <p class="chat-tool-empty" data-tool-empty>还没有工具调用。试试“帮我加一条明天交实验报告”。</p>
+            </div>
+          </section>
         </aside>
       </div>
     </section>

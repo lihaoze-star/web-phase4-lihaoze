@@ -17,11 +17,15 @@
   const errorText = document.querySelector("[data-error-text]");
   const retryButton = document.querySelector("[data-retry]");
   const count = document.querySelector("[data-chat-count]");
+  const toolLog = document.querySelector("[data-tool-log]");
+  const toolCount = document.querySelector("[data-tool-count]");
 
   if (!log || !form || !input) return;
 
   const welcomeHTML = log.innerHTML;
+  const toolLogHTML = toolLog ? toolLog.innerHTML : "";
   const history = [];
+  let toolCalls = 0;
   let controller = null;
   let streaming = false;
   let timedOut = false;
@@ -125,6 +129,54 @@
     errorText.textContent = "";
   }
 
+  function toolSummary(call) {
+    const result = call.result || {};
+    if (!result.ok) return result.error || "工具执行失败";
+    if (call.name === "add_item" && result.item) {
+      return "新增 #" + result.item.id + " · " + result.item.title;
+    }
+    if (call.name === "query_items") {
+      return "返回 " + result.count + " 条任务";
+    }
+    return "执行成功";
+  }
+
+  function appendToolLog(call) {
+    if (!toolLog) return;
+    const empty = toolLog.querySelector("[data-tool-empty]");
+    if (empty) empty.remove();
+
+    const ok = Boolean(call.result && call.result.ok);
+    const entry = document.createElement("article");
+    entry.className = "chat-tool" + (ok ? "" : " is-error");
+
+    const head = document.createElement("div");
+    head.className = "chat-tool-head";
+    const name = document.createElement("span");
+    name.className = "chat-tool-name";
+    name.textContent = call.name || "unknown_tool";
+    const status = document.createElement("span");
+    status.className = "chat-tool-status";
+    status.textContent = ok ? "成功" : "失败";
+    head.append(name, status);
+
+    const args = document.createElement("pre");
+    args.className = "chat-tool-args";
+    args.textContent = JSON.stringify(call.arguments || {}, null, 2);
+
+    const result = document.createElement("p");
+    result.className = "chat-tool-result";
+    result.textContent = toolSummary(call);
+
+    entry.append(head, args, result);
+    toolLog.appendChild(entry);
+    toolLog.scrollTop = toolLog.scrollHeight;
+
+    toolCalls += 1;
+    if (toolCount) toolCount.textContent = String(toolCalls);
+    setStatus("工具 " + call.name + " 已执行，正在整理回答…");
+  }
+
   function setStreaming(next) {
     streaming = next;
     log.setAttribute("aria-busy", String(next));
@@ -159,6 +211,9 @@
 
     if (event.error) {
       throw new Error(event.error);
+    }
+    if (event.tool_call) {
+      appendToolLog(event.tool_call);
     }
     if (typeof event.delta === "string" && event.delta) {
       bubble.textContent += event.delta;
@@ -331,6 +386,9 @@
     if (controller) controller.abort();
     history.length = 0;
     log.innerHTML = welcomeHTML;
+    toolCalls = 0;
+    if (toolLog) toolLog.innerHTML = toolLogHTML;
+    if (toolCount) toolCount.textContent = "0";
     hideError();
     input.value = "";
     updateCount();

@@ -13,6 +13,8 @@
 
 > **任务 4**：流式对话页 [chat.html](https://lihaoze-star.github.io/web-phase4-lihaoze/chat.html)，Flask 转发 DeepSeek；说明、录屏和 `.env` 证明见 [docs/task4.md](docs/task4.md)。
 
+> **任务 5**：在对话页接入 `add_item` / `query_items` 工具，模型可以直接操作任务清单；完整链路、失败案例和前后数据见 [docs/task5.md](docs/task5.md)。
+
 ---
 
 ## 预览

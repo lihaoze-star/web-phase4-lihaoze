@@ -455,6 +455,101 @@
   color: var(--ink-soft);
 }
 
+/* ---------- tool log ---------- */
+
+.chat-tools {
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.chat-tools-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.chat-tool-count {
+  min-width: 22px;
+  padding: 1px 7px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.chat-tool-empty {
+  margin: 12px 0 0;
+  font-size: 10.5px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+
+.chat-tool-log {
+  max-height: 280px;
+  margin-top: 10px;
+  overflow-y: auto;
+}
+
+.chat-tool {
+  margin-bottom: 12px;
+  padding: 9px 0 9px 11px;
+  border-left: 2px solid var(--lime);
+  background: rgba(216, 255, 71, 0.06);
+}
+
+.chat-tool.is-error {
+  border-left-color: var(--orange);
+  background: rgba(255, 77, 31, 0.06);
+}
+
+.chat-tool-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.chat-tool-name {
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.chat-tool-status {
+  flex: 0 0 auto;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: #47701b;
+}
+
+.chat-tool.is-error .chat-tool-status { color: #a53718; }
+
+.chat-tool-args {
+  margin: 6px 0 0;
+  padding: 7px 8px;
+  background: rgba(20, 20, 20, 0.05);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 9.5px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.chat-tool-result {
+  margin: 6px 0 0;
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+
+.chat-tool.is-error .chat-tool-result { color: #8f2e12; }
+
 /* ---------- responsive ---------- */
 
 @media (max-width: 1080px) {
