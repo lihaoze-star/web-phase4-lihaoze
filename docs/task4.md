@@ -99,3 +99,5 @@ python serve.py --port 8000
 - 前端：GitHub Pages，`chat.html` 随仓库自动发布。
 - API：当前用 localhost.run 隧道；长期在线可按 API 仓库的 `render.yaml` 部署到 Render，把 Render 的 HTTPS 地址填到 `js/config.js` 的 `baseUrl`。
 - Render 上需要在 Environment 里补 `LLM_API_KEY`，不要把 Key 写进 `render.yaml`。
+
+> localhost.run 免费隧道偶尔不转发 `OPTIONS` 预检，所以线上聊天请求用 `text/plain` 发送 JSON（CORS 简单请求）；服务端 `read_chat_messages()` 同时接受 `application/json` 和 `text/plain`，校验逻辑不变。
