@@ -277,8 +277,7 @@
     try {
       const response = await fetch(apiBase + "/api/chat", {
         method: "POST",
-        // text/plain 是 CORS 简单请求，不触发 OPTIONS 预检；服务端仍按 JSON 解析。
-        headers: { "Content-Type": "text/plain;charset=UTF-8" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: history.slice(-12) }),
         signal: controller.signal
       });

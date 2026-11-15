@@ -3,7 +3,7 @@
 在任务 4 的流式对话页上接了两个工具：`add_item` 和 `query_items`，它们直接操作任务 2 的 SQLite 数据库。
 
 - **在线页面**：<https://lihaoze-star.github.io/web-phase4-lihaoze/chat.html>
-- **公网 API**：`https://7c4f0b7772fa15.app.lhr.life/api/chat`（localhost.run 临时隧道）
+- **公网 API**：`https://listen-land-instantly-plugins.trycloudflare.com/api/chat`（Cloudflare Quick Tunnel 临时隧道）
 - **工具定义代码**：[app.py](https://github.com/lihaoze-star/web-phase4-api-lihaoze/blob/main/app.py) 的 `TOOLS`、`execute_tool`
 - **完整调用链截图**：[tool-chain.png](screenshots/tool-chain.png)
 - **前后数据**：[tool-before.png](screenshots/tool-before.png) → [tool-after.png](screenshots/tool-after.png)
@@ -156,4 +156,4 @@ python serve.py --port 8000
 
 打开 <http://127.0.0.1:8000/chat.html>，输入「帮我加一条明天交实验报告」。
 
-> 公网 API 通过 localhost.run 临时隧道暴露，免费域名会轮换；长期部署用 API 仓库的 `render.yaml`，在 Render 补 `LLM_API_KEY` 环境变量即可。
+> 公网 API 通过 Cloudflare Quick Tunnel 暴露，隧道进程需要保持运行；长期部署用 API 仓库的 `render.yaml`，在 Render 补 `LLM_API_KEY` 环境变量即可。

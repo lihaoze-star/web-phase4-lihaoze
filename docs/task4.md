@@ -3,7 +3,7 @@
 一个真的会逐字返回的对话页：前端用 `fetch` 读 SSE，Flask 在服务端转发 DeepSeek，Key 只在本机 `.env`。
 
 - **对话页**：<https://lihaoze-star.github.io/web-phase4-lihaoze/chat.html>
-- **公网 API**：`https://7c4f0b7772fa15.app.lhr.life/api/chat`（localhost.run 临时隧道）
+- **公网 API**：`https://listen-land-instantly-plugins.trycloudflare.com/api/chat`（Cloudflare Quick Tunnel 临时隧道）
 - **前端仓库**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
 - **API 仓库**：<https://github.com/lihaoze-star/web-phase4-api-lihaoze>
 - **流式录屏**：[chat-streaming.gif](screenshots/chat-streaming.gif)
@@ -97,7 +97,7 @@ python serve.py --port 8000
 ## 部署
 
 - 前端：GitHub Pages，`chat.html` 随仓库自动发布。
-- API：当前用 localhost.run 隧道；长期在线可按 API 仓库的 `render.yaml` 部署到 Render，把 Render 的 HTTPS 地址填到 `js/config.js` 的 `baseUrl`。
+- API：当前用 Cloudflare Quick Tunnel；长期在线可按 API 仓库的 `render.yaml` 部署到 Render，把 Render 的 HTTPS 地址填到 `js/config.js` 的 `baseUrl`。
 - Render 上需要在 Environment 里补 `LLM_API_KEY`，不要把 Key 写进 `render.yaml`。
 
-> localhost.run 免费隧道偶尔不转发 `OPTIONS` 预检，所以线上聊天请求用 `text/plain` 发送 JSON（CORS 简单请求）；服务端 `read_chat_messages()` 同时接受 `application/json` 和 `text/plain`，校验逻辑不变。
+> 前端按 `application/json` 请求；服务端 `read_chat_messages()` 同时接受 `application/json` 和 `text/plain`，方便用简单请求调试。

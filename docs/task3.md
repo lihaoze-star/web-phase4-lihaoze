@@ -5,7 +5,7 @@
 - **在线页面**：<https://lihaoze-star.github.io/web-phase4-lihaoze/tasks.html>
 - **前端仓库**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
 - **API 仓库**：<https://github.com/lihaoze-star/web-phase4-api-lihaoze>
-- **公网 API**：`https://7c4f0b7772fa15.app.lhr.life`（localhost.run 临时隧道）
+- **公网 API**：`https://listen-land-instantly-plugins.trycloudflare.com`（Cloudflare Quick Tunnel 临时隧道）
 - **接口文档**：[任务 2 接口文档](https://github.com/lihaoze-star/web-phase4-api-lihaoze/blob/main/docs/api.md)
 
 ## 这一页做了什么
@@ -27,7 +27,7 @@
 window.TASK_API_CONFIG = {
   baseUrl: isLocal
     ? "http://127.0.0.1:5000"
-    : "https://7c4f0b7772fa15.app.lhr.life",
+    : "https://listen-land-instantly-plugins.trycloudflare.com",
   timeoutMs: 8000
 };
 ```
@@ -87,12 +87,12 @@ python serve.py --port 8000
 ## 部署方式
 
 - **前端**：GitHub Pages，从 `web-phase4-lihaoze` 仓库的 `main` 分支根目录构建。
-- **API**：当前用 localhost.run 的 SSH 隧道，把本机 `127.0.0.1:5000` 映射成 HTTPS 地址：
+- **API**：当前用 Cloudflare Quick Tunnel 把本机 `127.0.0.1:5000` 映射成 HTTPS 地址：
 
   ```bash
-  ssh -R 80:localhost:5000 nokey@localhost.run
+  cloudflared tunnel --url http://127.0.0.1:5000
   ```
 
-  隧道进程要保持运行。localhost.run 的免费域名会周期性变化；如果地址变了，只需要改 `js/config.js` 里的 `baseUrl` 并重新推送前端。
+  隧道进程要保持运行；如果地址变了，只需要改 `js/config.js` 里的 `baseUrl` 并重新推送前端。
 
 - **换成永久后端**：API 仓库里带了 `render.yaml`，在 Render 里连接仓库即可创建 Web Service；创建后把 Render 的 HTTPS 地址填进 `js/config.js`。也可以用 Railway、自己的云服务器，接口和 CORS 代码不用改。
