@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Task 04 · .env proof</title>
+<style>
+  :root { --bg:#0b0d12; --panel:#12151c; --line:#262b36; --text:#d8dee9; --muted:#7c8798; --green:#7ee787; --orange:#ffa657; --blue:#79c0ff; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:38px; background:var(--bg); color:var(--text); font-family:"Cascadia Mono","Consolas","Microsoft YaHei",monospace; }
+  .page { max-width:1360px; margin:0 auto; }
+  .meta { display:flex; justify-content:space-between; gap:24px; margin:0 4px 14px; color:var(--muted); font-size:13px; letter-spacing:.06em; }
+  .meta strong { color:var(--text); letter-spacing:0; }
+  .terminal { border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--panel); box-shadow:0 24px 70px rgba(0,0,0,.45); }
+  .bar { display:flex; align-items:center; gap:12px; height:44px; padding:0 18px; border-bottom:1px solid var(--line); background:#171b24; color:#aab4c3; font-size:12.5px; }
+  .dots { display:flex; gap:7px; }
+  .dot { width:11px; height:11px; border-radius:50%; }
+  .r { background:#ff5f57; } .y { background:#febc2e; } .g { background:#28c840; }
+  pre { margin:0; padding:26px 30px 30px; font-size:15px; line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; }
+  .p { color:var(--green); font-weight:700; }
+  .c { color:#e6edf3; }
+  .o { color:#b9c7da; }
+  .ok { color:var(--green); }
+  .dim { color:var(--muted); }
+  .foot { display:flex; justify-content:space-between; gap:24px; margin:12px 4px 0; color:var(--muted); font-size:12px; }
+  .tag { color:var(--orange); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta"><div><strong>任务 4 · Key 卫生检查</strong>　·　.env / .gitignore / git check-ignore</div><div>2026-11-15 · Asia/Shanghai</div></div>
+  <div class="terminal">
+    <div class="bar"><div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div><div>Terminal — 在 web-phase4-api-lihaoze 目录</div></div>
+    <pre><span class="p">$</span> <span class="c">Get-Content .env</span>
+<span class="o">LLM_PROVIDER=deepseek
+LLM_MODEL=deepseek-chat
+LLM_API_KEY=sk-************************
+MAX_CONTEXT_CHARS=6000</span>
+
+<span class="p">$</span> <span class="c">Select-String -Path .gitignore -Pattern "env"</span>
+<span class="o">.gitignore:14:.env</span>
+
+<span class="p">$</span> <span class="c">git check-ignore -v .env</span>
+<span class="o">.gitignore:14:.env	.env</span>
+
+<span class="p">$</span> <span class="c">git status --short -- .env</span>
+<span class="dim">(no output — .env 没有被 Git 跟踪)</span></pre>
+  </div>
+  <div class="foot"><span><span class="tag">✓</span> Key 已打码；真实 Key 只在本机 .env</span><span>git check-ignore 证明它不会进代码库</span></div>
+</div>
+</body>
+</html>

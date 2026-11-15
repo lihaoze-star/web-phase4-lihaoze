@@ -11,6 +11,8 @@
 
 > **任务 3**：前后端联调页 [tasks.html](https://lihaoze-star.github.io/web-phase4-lihaoze/tasks.html)，接入任务 2 的 Flask + SQLite 接口；三种状态截图与 CORS 记录见 [docs/task3.md](docs/task3.md)、[docs/cors-record.md](docs/cors-record.md)。
 
+> **任务 4**：流式对话页 [chat.html](https://lihaoze-star.github.io/web-phase4-lihaoze/chat.html)，Flask 转发 DeepSeek；说明、录屏和 `.env` 证明见 [docs/task4.md](docs/task4.md)。
+
 ---
 
 ## 预览
