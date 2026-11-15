@@ -9,6 +9,8 @@
 - **线上地址**：<https://lihaoze-star.github.io/web-phase4-lihaoze/>
 - **技术限制**：0 框架 / 0 构建 / 0 依赖，仅原生 HTML、CSS、JavaScript
 
+> **任务 3**：前后端联调页 [tasks.html](https://lihaoze-star.github.io/web-phase4-lihaoze/tasks.html)，接入任务 2 的 Flask + SQLite 接口；三种状态截图与 CORS 记录见 [docs/task3.md](docs/task3.md)、[docs/cors-record.md](docs/cors-record.md)。
+
 ---
 
 ## 预览

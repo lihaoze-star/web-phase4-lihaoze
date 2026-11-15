@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>任务清单 / 李昊泽 — fetch + Flask + SQLite</title>
+  <meta name="description" content="任务 3：用原生 fetch 调 Flask + SQLite 接口的任务清单，包含加载中、空数据、请求失败三种状态。">
+  <meta name="theme-color" content="#f2eee5">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tasks.css">
+  <script src="js/config.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/tasks.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="李昊泽的个人主页">
+        <span class="brand-mark">HZ</span><span class="brand-dot" aria-hidden="true">.</span>
+      </a>
+
+      <nav class="site-nav" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="project.html">项目</a>
+        <a href="tasks.html" aria-current="page">任务</a>
+        <a href="index.html#about">关于</a>
+      </nav>
+
+      <a class="header-cta" href="index.html#contact">联系我 <span aria-hidden="true">↗</span></a>
+
+      <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false">
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="sr-only">打开菜单</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="site-menu" hidden>
+    <nav aria-label="移动端导航">
+      <a href="index.html"><span>首页</span><small>HOME</small></a>
+      <a href="project.html"><span>项目</span><small>WORK</small></a>
+      <a href="tasks.html" aria-current="page"><span>任务</span><small>API</small></a>
+      <a href="index.html#about"><span>关于</span><small>ABOUT</small></a>
+      <a href="index.html#contact"><span>联系</span><small>CONTACT</small></a>
+    </nav>
+    <p class="mobile-menu-foot">李昊泽 · 前端学习者<br>中国 / UTC+8 · 2026</p>
+  </div>
+
+  <main id="main">
+    <section class="task-hero" aria-labelledby="task-title-hero">
+      <div class="container">
+        <div class="task-hero-grid">
+          <div>
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span>FULL STACK / PHASE 02</p>
+            <h1 id="task-title-hero">写下来，<br><em>存进去。</em></h1>
+          </div>
+          <div class="task-hero-copy">
+            <p class="lead">这是任务 1 的页面，接上任务 2 的接口。清单不在 JavaScript 数组里，每一次加载、新增、删除，都通过 <code>fetch</code> 请求 Flask，最后落到 SQLite。</p>
+            <p class="task-api-line">
+              <span class="task-api-dot" aria-hidden="true"></span>
+              <span>API</span>
+              <code data-api-url>读取配置中…</code>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="task-section" aria-labelledby="task-heading">
+      <div class="container task-layout">
+        <div class="task-panel">
+          <header class="task-panel-head">
+            <div>
+              <p class="eyebrow eyebrow--light"><span class="dot" aria-hidden="true"></span>TASKS / SQLITE</p>
+              <h2 id="task-heading">今天的清单</h2>
+            </div>
+            <p class="task-counter"><strong data-task-count>—</strong><span>条任务</span></p>
+          </header>
+
+          <form class="task-form" data-task-form novalidate>
+            <label class="sr-only" for="task-title">任务标题</label>
+            <input id="task-title" name="title" type="text" maxlength="80" placeholder="写一件要完成的事…" autocomplete="off" required>
+            <button class="button button--primary" type="submit">
+              <span data-submit-label>添加任务</span>
+              <span aria-hidden="true">↗</span>
+            </button>
+          </form>
+          <p class="task-form-error" data-form-error role="alert" hidden></p>
+
+          <div class="task-toolbar">
+            <p class="task-status" data-task-status aria-live="polite">准备读取…</p>
+            <button class="task-refresh" type="button" data-refresh>刷新 <span aria-hidden="true">↻</span></button>
+          </div>
+
+          <div class="task-view" data-task-view aria-live="polite" aria-busy="true"></div>
+        </div>
+
+        <aside class="task-side" aria-label="接口信息">
+          <p class="eyebrow">REQUEST / RESPONSE</p>
+          <h3>接口不是装饰。</h3>
+          <p>列表、新增、删除都是真实请求。按 F5 刷新页面，数据仍然从 SQLite 里读出来，不会被重置成一段写死的数组。</p>
+
+          <dl class="task-meta">
+            <div><dt>列表</dt><dd><code>GET /api/tasks</code></dd></div>
+            <div><dt>新增</dt><dd><code>POST /api/tasks</code></dd></div>
+            <div><dt>删除</dt><dd><code>DELETE /api/tasks/:id</code></dd></div>
+            <div><dt>存储</dt><dd>SQLite · <code>data/tasks.db</code></dd></div>
+            <div><dt>配置</dt><dd><code>js/config.js</code></dd></div>
+          </dl>
+
+          <p class="task-side-note">这一页专门把三种状态做出来：加载中、空数据、请求失败。失败时点“重试”，不会刷新整页。</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 李昊泽</p>
+      <p>手写 HTML / CSS / JS · 无框架</p>
+      <p>本地时间 <time data-clock>UTC+8</time></p>
+    </div>
+  </footer>
+</body>
+</html>
