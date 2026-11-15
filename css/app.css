@@ -1,0 +1,189 @@
+/* ==========================================================================
+   One app page — tasks + streaming AI in a single view
+   ========================================================================== */
+
+.app-hero {
+  padding: clamp(40px, 5.6vw, 72px) 0 clamp(26px, 3.6vw, 44px);
+  border-bottom: 1px solid var(--line);
+}
+
+.app-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  gap: clamp(28px, 5vw, 70px);
+  align-items: end;
+}
+
+.app-hero h1 {
+  margin: 15px 0 0;
+  font-size: clamp(2.8rem, 6.8vw, 6.2rem);
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: -0.06em;
+}
+
+.app-hero h1 em {
+  font-family: var(--serif);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.app-hero-copy .lead {
+  max-width: 52ch;
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.9;
+}
+
+.app-api-line {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  margin: 18px 0 0;
+  padding: 7px 11px;
+  border: 1px solid var(--line);
+  background: rgba(248, 245, 238, 0.55);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.app-api-line code {
+  padding: 0;
+  background: transparent;
+  font-size: 10px;
+  letter-spacing: 0;
+}
+
+.app-api-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lime);
+}
+
+.app-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: clamp(24px, 3.4vw, 38px);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.app-flow span {
+  padding: 11px 12px;
+  border-right: 1px solid var(--line);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-flow span:last-child { border-right: 0; }
+
+.app-flow b {
+  margin-right: 6px;
+  font-family: var(--serif);
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.app-section {
+  padding: 30px 0 clamp(54px, 7vw, 92px);
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.app-col { min-width: 0; }
+
+.app-col--tasks .task-panel { height: 100%; }
+
+.app-col--tasks .task-view {
+  max-height: 390px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.app-col--chat .chat-shell {
+  border: 1px solid var(--ink);
+}
+
+.app-col--chat .chat-log {
+  height: 360px;
+  min-height: 300px;
+  max-height: 360px;
+}
+
+.app-col--chat .chat-bubble { font-size: 13px; }
+
+.app-col--chat .chat-composer textarea {
+  min-height: 64px;
+  max-height: 120px;
+}
+
+.app-note {
+  margin: 12px 0 0;
+  padding: 9px 11px;
+  border-left: 2px solid var(--lime);
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.app-tool-panel {
+  margin-top: 14px;
+  padding: 12px 14px 10px;
+  border: 1px solid var(--line);
+  background: rgba(248, 245, 238, 0.52);
+}
+
+.app-tool-panel .chat-tool-log {
+  max-height: 150px;
+  margin-top: 8px;
+}
+
+.app-tool-panel .chat-tool {
+  margin-bottom: 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.app-tool-panel .chat-tool-args {
+  max-height: 54px;
+  overflow-y: auto;
+}
+
+@media (max-width: 1120px) {
+  .app-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .app-flow span { font-size: 8px; }
+}
+
+@media (max-width: 960px) {
+  .app-hero-grid { grid-template-columns: 1fr; align-items: start; }
+  .app-grid { grid-template-columns: 1fr; }
+  .app-col--tasks .task-view { max-height: 340px; }
+  .app-col--chat .chat-log { height: 340px; }
+}
+
+@media (max-width: 700px) {
+  .app-hero { padding-top: 34px; }
+  .app-hero h1 { font-size: clamp(2.5rem, 13vw, 4rem); }
+  .app-flow { grid-template-columns: 1fr 1fr; }
+  .app-flow span:nth-child(2) { border-right: 0; }
+  .app-flow span:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .app-section { padding-top: 20px; }
+  .app-col--chat .chat-log { height: 320px; min-height: 280px; }
+  .app-tool-panel .chat-tool-log { max-height: 130px; }
+}

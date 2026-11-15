@@ -1,225 +1,297 @@
-# web-phase4-lihaoze · 第一阶段作品集
+# 一个页面，四件事打通
 
-用原生 **HTML / CSS / JavaScript** 完成的第一阶段作业：一个个人主页、一页项目档案，以及一个认真设计的 404。
+一个把「任务清单」和「AI 助手」放在同一页的课程整合项目：左边手动增删改查，右边用自然语言让模型调用工具改同一张表。
 
-没有框架、没有构建步骤、没有 npm 依赖，所有页面都可以直接阅读源代码。
+- **在线应用**：<https://lihaoze-star.github.io/web-phase4-lihaoze/app.html>
+- **任务页（单独看 CRUD）**：<https://lihaoze-star.github.io/web-phase4-lihaoze/tasks.html>
+- **对话页（单独看流式）**：<https://lihaoze-star.github.io/web-phase4-lihaoze/chat.html>
+- **前端仓库**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
+- **API 仓库**：<https://github.com/lihaoze-star/web-phase4-api-lihaoze>
+- **2 分钟演示**：[docs/demo.mp4](docs/demo.mp4)
+- **演示封面**：[docs/screenshots/demo-poster.png](docs/screenshots/demo-poster.png)
 
-- **选题**：任务 1 · 选题一「个人主页」（含项目展示页与 404）
-- **仓库**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
-- **线上地址**：<https://lihaoze-star.github.io/web-phase4-lihaoze/>
-- **技术限制**：0 框架 / 0 构建 / 0 依赖，仅原生 HTML、CSS、JavaScript
+![整合页](docs/screenshots/app-integrated.png)
 
-> **任务 3**：前后端联调页 [tasks.html](https://lihaoze-star.github.io/web-phase4-lihaoze/tasks.html)，接入任务 2 的 Flask + SQLite 接口；三种状态截图与 CORS 记录见 [docs/task3.md](docs/task3.md)、[docs/cors-record.md](docs/cors-record.md)。
+## 解决什么问题
 
-> **任务 4**：流式对话页 [chat.html](https://lihaoze-star.github.io/web-phase4-lihaoze/chat.html)，Flask 转发 DeepSeek；说明、录屏和 `.env` 证明见 [docs/task4.md](docs/task4.md)。
+前五个任务分别是个人主页、CRUD API、前后端联调、流式对话、工具调用。这个任务把它们合成一个能用的应用：
 
-> **任务 5**：在对话页接入 `add_item` / `query_items` 工具，模型可以直接操作任务清单；完整链路、失败案例和前后数据见 [docs/task5.md](docs/task5.md)。
+- 一个页面 `app.html`：任务清单 + AI 助手，同一屏。
+- 一套接口：Flask 的 `/api/tasks` 和 `/api/chat`，同一个服务。
+- 一个数据库：`tasks.db` 的 `tasks` 表，手动操作和 AI 工具调用都写它。
+- 一个 AI 能力：DeepSeek 流式回答 + `add_item` / `query_items` 工具调用。
 
----
+不是把五个作业并排放在导航里：在对话里说「帮我加一条准备 2 分钟演示」，左边清单会自动从 04 变成 05，工具日志同时出现 `add_item` 的参数与结果。
 
-## 预览
+## 功能
 
-### 电脑端 · 1440px
+### 任务 CRUD
 
-![电脑端首页](docs/screenshots/desktop-home-viewport.png)
+- 加载中 / 空数据 / 请求失败三态，失败可重试。
+- 新增、勾选完成、删除，全部走真实 `fetch`。
+- 刷新页面数据仍在；SQLite 持久化。
+- 统一 JSON 信封：`{ code, data, msg }`。
 
-[查看首页完整长图](docs/screenshots/desktop-home.png) · [查看项目档案完整长图](docs/screenshots/desktop-project.png)
+### AI 流式对话
 
-### 手机端 · 375px
+- 后端代理 DeepSeek，Key 只在服务端 `.env`。
+- SSE 逐字输出，前端 `ReadableStream` 读取。
+- 三轮上下文，服务端 `MAX_CONTEXT_CHARS=6000` 截断。
+- 停止生成、重试、清空、可读的超时/401/429/余额错误。
 
-![手机端首页](docs/screenshots/mobile-home-viewport.png)
+### 工具调用
 
-[查看首页完整长图](docs/screenshots/mobile-home.png) · [查看项目档案完整长图](docs/screenshots/mobile-project.png) · [手机端菜单](docs/screenshots/mobile-menu.png)
+- `add_item`：新增任务，执行 `INSERT INTO tasks`。
+- `query_items`：按状态/关键词查询，执行 `SELECT`。
+- 模型返回 `tool_calls` → 后端执行 SQLite → 结果以 `role=tool` 回填 → 模型自然语言总结。
+- 工具结果以 SSE `{"tool_call":...}` 推给前端；右侧日志显示工具名、参数、成功/失败、结果摘要。
+- 工具调用后同一页的任务列表自动刷新。
+- 工具循环最多 3 轮，防死循环。
 
-### 404 与交互
+## 技术栈
 
-| 404（电脑端） | 404（手机端） |
-| --- | --- |
-| ![404 页面](docs/screenshots/404.png) | ![手机端 404](docs/screenshots/404-mobile.png) |
-
-![拾光专注计时器](docs/screenshots/desktop-timer.png)
-
----
-
-## 页面与交互
-
-| 页面 | 内容 | 交互 |
+| 层 | 选型 | 为什么 |
 | --- | --- | --- |
-| `index.html` | 自我介绍、技能栈、第一阶段项目卡片、联系方式 | 项目筛选、移动端菜单、`fetch` 更新「现在」卡片 |
-| `project.html` | 三个项目的简介、封面、拆解与复盘 | 吸顶项目目录（`IntersectionObserver`）、可运行的 25/5 分钟专注计时器 |
-| `404.html` | 自定义错误页，显示请求路径并给出回首页入口 | 读取 `location.pathname` 显示走丢的地址 |
+| 前端 | 原生 HTML / CSS / JavaScript | 0 框架、0 构建，代码可直接读；课程要求 |
+| 后端 | Python 3.12 + Flask | 单文件应用，路由/校验/CORS 都清楚 |
+| 数据库 | SQLite (`tasks.db`) | 单用户课程项目，零配置、文件持久化、支持 SQL 查询 |
+| AI | DeepSeek `deepseek-chat` | OpenAI 兼容接口，支持 SSE 与 function calling |
+| 部署 | GitHub Pages + Cloudflare Quick Tunnel | 前端静态托管；本地 API 用临时公网地址 |
+| 测试 | Python `unittest` | 32 个后端测试，含工具参数校验 |
 
-四个 JS 交互都不依赖 CSS `:hover`：
+## 架构
 
-1. **项目筛选**：`index.html` 的三个筛选按钮，按 `data-category` 过滤卡片，并更新可见数量。
-2. **移动端菜单**：`aria-expanded`、焦点管理、Esc 关闭、Tab 焦点循环。
-3. **专注计时器**：开始 / 暂停 / 继续 / 重置、25 与 5 分钟切换、SVG 圆环进度。
-4. **一次真实的 `fetch`**：「现在」卡片从 `data/now.json` 读取内容，失败时保留静态回退，不产生控制台报错。
-
----
-
-## 本地打开
-
-需要 Python 3（不需要安装任何依赖）：
-
-```bash
-cd web-phase4-lihaoze
-python serve.py
+```text
+app.html
+  ├─ GET/POST/PUT/DELETE /api/tasks ──┐
+  └─ POST /api/chat (SSE)             │
+        └─ DeepSeek stream + tools    │
+              └─ execute_tool ────────┤
+                                      ▼
+                              data/tasks.db
 ```
 
-然后打开 <http://127.0.0.1:8000/>。
+- `app.html` 同时加载 `js/tasks.js` 与 `js/chat.js`。
+- 两个模块共用一个 `js/config.js` 的 `baseUrl`。
+- 工具执行成功后，`chat.js` 派发 `tasks:changed` 事件，`tasks.js` 重新 `GET /api/tasks`，所以列表会自己刷新。
 
-> 不建议直接双击 `index.html`。`file://` 下浏览器会拦截 `fetch("data/now.json")`，自定义 404 也不会生效。
-> 如果只想看页面，`python -m http.server 8000` 也可以，但它不会返回自定义 404 页。
+## 本地运行（约 10 分钟）
 
----
+### 1. 准备
+
+- Python 3.10+（开发环境 3.12）
+- 一个 DeepSeek API Key（只用于 AI 部分；不填也能跑 CRUD）
+
+### 2. 启动 API
+
+```powershell
+git clone https://github.com/lihaoze-star/web-phase4-api-lihaoze.git
+cd web-phase4-api-lihaoze
+
+python -m venv .venv
+.venv\Scripts\activate
+
+pip install -r requirements.txt
+
+Copy-Item .env.example .env
+notepad .env
+```
+
+把 `.env` 填成：
+
+```env
+LLM_PROVIDER=deepseek
+LLM_MODEL=deepseek-chat
+LLM_API_KEY=sk-你的Key
+MAX_CONTEXT_CHARS=6000
+```
+
+启动：
+
+```powershell
+python app.py
+```
+
+默认监听 <http://127.0.0.1:5000>。
+
+### 3. 启动前端
+
+另开一个终端：
+
+```powershell
+git clone https://github.com/lihaoze-star/web-phase4-lihaoze.git
+cd web-phase4-lihaoze
+
+python serve.py --port 8000
+```
+
+打开 <http://127.0.0.1:8000/app.html>。
+
+> 不要直接双击 HTML。`file://` 下 `fetch` 会被拦截，应该用 `serve.py` 或 `python -m http.server 8000`。
+
+### 4. 验证
+
+1. 在左边输入「整理答辩提纲」，点添加 → 数据库多一条。
+2. 在右边说「帮我加一条准备 2 分钟演示」→ 工具日志出现 `add_item`，左边自动多一条。
+3. 在右边说「查一下有哪些未完成的任务」→ 工具日志出现 `query_items`，回答列出任务。
+4. 刷新页面 → 数据仍在。
+
+## 环境变量
+
+| 变量 | 必填 | 说明 |
+| --- | --- | --- |
+| `LLM_PROVIDER` | 否 | `deepseek` / `zhipu` / `bailian` / `doubao`，默认 `deepseek` |
+| `LLM_MODEL` | 否 | 默认 `deepseek-chat`；豆包填接入点 ID |
+| `LLM_API_KEY` | AI 必填 | 只放服务端 `.env`，不要写进前端 |
+| `MAX_CONTEXT_CHARS` | 否 | 默认 `6000` |
+| `LLM_BASE_URL` | 否 | 覆盖默认接口地址，一般不用 |
+
+`.env` 已被 `.gitignore` 忽略；仓库里只有 `.env.example`。Key 卫生证明见 [docs/task4.md](docs/task4.md) 与 [docs/screenshots/env-proof.png](docs/screenshots/env-proof.png)。
+
+## 接口
+
+| 方法 | 路径 | 作用 |
+| --- | --- | --- |
+| GET | `/api/tasks` | 任务列表 |
+| POST | `/api/tasks` | 新增任务，body `{ "title": "..." }` |
+| GET | `/api/tasks/:id` | 单条任务 |
+| PUT | `/api/tasks/:id` | 修改标题/完成状态 |
+| DELETE | `/api/tasks/:id` | 删除 |
+| POST | `/api/chat` | 流式对话 + 工具调用，SSE |
+
+普通接口统一返回：
+
+```json
+{ "code": 200, "data": {}, "msg": "ok" }
+```
+
+聊天接口返回 SSE：
+
+```text
+data: {"delta":"已"}
+
+data: {"tool_call":{"name":"add_item","arguments":{"title":"..."},"result":{"ok":true,"item":{...}}}}
+
+data: {"done":true}
+```
+
+## 数据结构
+
+```sql
+CREATE TABLE IF NOT EXISTS tasks (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  done INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL
+);
+```
+
+为什么就一张表：
+
+- 单用户、单清单，没有多租户/权限需求。
+- `done` 用 0/1 存布尔，SQLite 没有原生 bool，过滤直接 `done = 0/1`。
+- `created_at` 存 ISO 时间字符串，前端直接 `new Date()` 格式化，排序不依赖时区。
+- 工具和 CRUD 共用一张表，避免「AI 改一份、页面改另一份」的双写问题。
 
 ## 目录结构
 
 ```text
-web-phase4-lihaoze/
-├── index.html               # 个人主页
-├── project.html             # 项目档案
-├── 404.html                 # 自定义错误页
+web-phase4-lihaoze/                 # 前端（GitHub Pages）
+├── app.html                        # 任务 6 整合页：任务 + AI + 工具日志
+├── tasks.html                      # 单独的任务 CRUD 页
+├── chat.html                       # 单独的流式对话页
+├── index.html / project.html / 404.html
 ├── css/
-│   └── style.css            # 全部样式与响应式断点
+│   ├── style.css                   # 全站样式
+│   ├── tasks.css                   # 任务面板
+│   ├── chat.css                    # 对话面板
+│   └── app.css                     # 整合页布局
 ├── js/
-│   ├── main.js              # 菜单、筛选、fetch、时钟
-│   └── project.js           # 吸顶目录、专注计时器
-├── data/
-│   └── now.json             # 首页「现在」卡片的数据源
-├── assets/
-│   ├── favicon.svg
-│   └── img/                 # 压缩后的 WebP 封面（单张 < 300 KB）
+│   ├── config.js                   # API baseUrl（本地/线上自动切换）
+│   ├── tasks.js                    # CRUD + 三态
+│   ├── chat.js                     # SSE、停止、工具日志
+│   └── main.js / project.js        # 主页/项目页交互
 ├── docs/
-│   ├── network-record.md    # 抓包记录（3 条核心请求 + 404）
-│   ├── network-capture.json # 原始网络事件
-│   └── screenshots/         # 电脑端 / 手机端截图
-├── scripts/
-│   ├── capture.mjs          # 可选：用 CDP 重新生成截图与抓包记录
-│   └── make_images.py       # 可选：生成项目封面
-├── serve.py                 # 本地静态服务器（带自定义 404）
-└── README.md
+│   ├── demo.mp4                    # 2 分钟演示
+│   ├── task3.md / task4.md / task5.md
+│   └── screenshots/                # 功能与验收截图
+└── serve.py                        # 本地静态服务器（支持 404）
+
+web-phase4-api-lihaoze/             # 后端（Flask）
+├── app.py                          # 路由、校验、CORS、SQLite、SSE、tools
+├── data/tasks.db                   # 运行时数据库（gitignore）
+├── tests/test_api.py               # 32 个 unittest
+├── requirements.txt
+├── .env.example                    # 环境变量模板
+├── Procfile / render.yaml          # Render 部署
+└── docs/api.md                     # 接口文档
 ```
 
----
+## 设计取舍
 
-## 作业要求对照
+- **为什么不用框架**：课程目标是理解 fetch、SSE、DOM 和状态；原生代码让每一段都能在答辩时讲清。代价是复用少，所以 CSS/JS 按页面拆文件。
+- **为什么是 SQLite**：单用户、数据量小、要真实持久化。SQLite 零配置，工具与 CRUD 共用一张表，事务简单；多用户高并发不适合它。
+- **为什么用 SSE 而不是 WebSocket**：只需要服务端单向推 token，SSE 基于 HTTP，浏览器 `ReadableStream` 直接读，部署和调试更简单。
+- **为什么工具在后端执行**：Key 和数据库都不暴露给浏览器；模型只返回结构化 `tool_calls`，Flask 做参数校验和 SQL。
+- **为什么工具循环最多 3 轮**：防止模型反复调用/死循环；正常一次工具调用后就能总结，3 轮足够兜底。
 
-| 要求 | 实现 | 证据 |
-| --- | --- | --- |
-| 至少 2 个页面，能互相跳转 | 3 个 HTML 页面，导航、项目卡片、页脚互链 | `index.html` ↔ `project.html` ↔ `404.html` |
-| 使用语义化标签 | `header`、`nav`、`main`、`section`、`article`、`footer`，没有满屏 `div` | 查看任一 HTML 源码 |
-| 375px 不出现横向滚动条、文字不重叠 | 三页在 375px 下 `scrollWidth === innerWidth`；移动端标题单独放宽行高 | [手机端截图](docs/screenshots/mobile-home.png) · 自测记录见下 |
-| 至少 1 处 JS 交互，不能只靠 `:hover` | 筛选、菜单、计时器、`fetch` 共 4 处 | 见「页面与交互」 |
-| 图片压缩后上传，单张 ≤ 300 KB | 4 张 WebP：30.7 KB / 56.4 KB / 110.9 KB / 143.3 KB | `assets/img/` |
-| 控制台不能有红色报错 | 正常页面 0 条；404 页只有一条**故意**请求的 404 资源提示 | 见「自测记录」 |
-| 部署到 HTTPS 公网地址 | GitHub Pages（`main` 分支 / 根目录） | <https://lihaoze-star.github.io/web-phase4-lihaoze/> |
-| 抓包记录 3 条 + 故意 404 | 主文档、CSS、JS、`fetch` + 一个 404 | [docs/network-record.md](docs/network-record.md) |
+## 已知问题
 
----
+1. **公网 API 是临时隧道**：当前用 Cloudflare Quick Tunnel，进程必须保持运行；重启后 URL 会变，要同步改 `js/config.js` 的 `baseUrl`。长期部署用 `render.yaml` 到 Render，补 `LLM_API_KEY`。
+2. **没有登录/鉴权**：这是单用户课程项目，任何拿到 API 地址的人都能写任务；不要直接当生产服务暴露。
+3. **聊天历史只在内存**：刷新页面会清空对话与工具日志；任务数据在 SQLite，不受影响。
+4. **模型延迟不可控**：长回答可能超过 60 秒；已做 60 秒超时、停止按钮和中文错误提示，但没有断点续传。
+5. **工具能力有限**：只有新增和查询，没有删除/修改工具；复杂多步任务需要模型多次调用，超过 3 轮会停止。
+6. **SQLite 单写入者**：课程规模够用，高并发写入会锁等待。
+7. **部分免费隧道会缓冲 SSE**：已加 `Cache-Control: no-transform` 与 `X-Accel-Buffering: no`；Cloudflare 隧道下实测正常。
 
-## 抓包记录（摘要）
+## 2 分钟演示
 
-一次本地实测（Edge 157，1440 × 1000，`http://127.0.0.1:8000`）：
+[![演示封面](docs/screenshots/demo-poster.png)](docs/demo.mp4)
 
-| 请求 | 路径 | 方法 | 状态码 | 耗时 | 传输大小 |
-| --- | --- | --- | --- | --- | --- |
-| 页面主文档 | `/` | GET | 200 | 8 ms | 13.4 KB |
-| 样式表 | `/css/style.css` | GET | 200 | 22 ms | 39.7 KB |
-| 脚本 | `/js/main.js` | GET | 200 | 27 ms | 5.3 KB |
-| 自己写的 `fetch` | `/data/now.json` | GET | 200 | 5 ms | 0.4 KB |
-| 故意请求不存在的路径 | `/this-page-does-not-exist.html` | GET | **404** | 7 ms | 3.6 KB |
+结构：问题背景 → 手动 CRUD → 自然语言工具调用 → 工具日志/列表自动刷新 → 技术栈 → 踩过的坑。
 
-完整记录、复现步骤和原始事件见 [docs/network-record.md](docs/network-record.md)。
+- [docs/demo.mp4](docs/demo.mp4)（约 2 分钟，1280×800）
+- [docs/task5.md](docs/task5.md)：工具调用完整链路与失败案例
+- [docs/task4.md](docs/task4.md)：流式、上下文、Key 证明
+- [docs/task3.md](docs/task3.md)：前后端联调与三态
 
-404 截图：[电脑端](docs/screenshots/404.png) · [手机端](docs/screenshots/404-mobile.png)。
+## 答辩速记
 
----
+**1. 为什么这样设计？**
 
-## 部署到 GitHub Pages
+单用户课程项目优先「能跑、能讲清、能维护」：原生前端降低抽象；Flask 单文件让路由/校验/CORS 一眼可见；SQLite 省掉数据库服务；SSE 比 WebSocket 更贴合单向 token 流；工具在后端执行保证 Key 和数据库不出浏览器。
 
-已部署：仓库 [`lihaoze-star/web-phase4-lihaoze`](https://github.com/lihaoze-star/web-phase4-lihaoze) 的 `main` 分支根目录，GitHub Pages 自动构建。
+**2. 打开一个文件讲代码。**
 
-- **线上地址**：<https://lihaoze-star.github.io/web-phase4-lihaoze/>
-- **仓库地址**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
+看 `js/chat.js` 的 `parseBlock()`：它按 `\n\n` 切 SSE 事件，逐行取 `data:`，`JSON.parse` 后处理三种 payload：`delta` 追加文字、`tool_call` 写工具日志并派发 `tasks:changed`、`error` 抛给统一错误 UI。`done` 返回 true 结束读取。
 
-从零复现的步骤：
+后端看 `app.py` 的 `stream_model_turn()`：流式累积 `delta.content` 和 `delta.tool_calls`，`normalise_tool_calls()` 拼完整参数，`execute_tool()` 执行 SQLite，结果以 `role=tool` 回填后再请求模型。
 
-1. 在 GitHub 新建公开仓库 `web-phase4-lihaoze`（不要勾选 README / .gitignore）。
-2. 在项目目录执行：
+**3. 哪里最容易坏？**
 
-   ```bash
-   git remote add origin https://github.com/lihaoze-star/web-phase4-lihaoze.git
-   git branch -M main
-   git push -u origin main
-   ```
+公网隧道和模型额度。开发中真实踩过：localhost.run 的 OPTIONS 预检被边缘丢弃，页面只报 `Failed to fetch`；用 CDP Network 看到预检没有 `Access-Control-Allow-Origin`，换 Cloudflare Quick Tunnel 后恢复。另一个是工具参数名 `content`/`title` 不一致，模型按 schema 传 `content`，后端返回「title 必须是字符串」；修法是统一字段名、description 给示例、后端保留校验，并用同一句话重测。
 
-3. 打开仓库的 **Settings → Pages**：
-   - **Source** 选择 `Deploy from a branch`
-   - **Branch** 选择 `main`，目录选择 `/ (root)`
-   - 点击 **Save**
-4. 等 1 分钟左右，访问：
+## 测试
 
-   ```text
-   https://lihaoze-star.github.io/web-phase4-lihaoze/
-   ```
-
-> 三个页面都使用相对路径，所以部署在 `/web-phase4-lihaoze/` 这样的子路径下也能正常工作。
-> GitHub Pages 会自动把仓库根目录的 `404.html` 用作自定义错误页。
-
-### 其他平台（任选其一）
-
-- **Vercel**：New Project → 导入该仓库 → Framework Preset 选 `Other` → Output Directory 留空 → Deploy。
-- **Cloudflare Pages**：Connect to Git → 选择仓库 → Build command 留空 → Build output directory 填 `/` → Deploy。
-
----
-
-## 自测记录
-
-- 日期：2026-11-13
-- 浏览器：Microsoft Edge 157（headless，CDP 采集）
-- 视口：电脑端 1440 × 1000；手机端 375 × 812（DPR 2）
-
-| 页面 | 375px `innerWidth` | 375px `scrollWidth` | 横向溢出元素 | 控制台红色报错 |
-| --- | --- | --- | --- | --- |
-| `/` | 375 | 375 | 0 | 0 |
-| `/project.html` | 375 | 375 | 0 | 0 |
-| `/this-page-does-not-exist.html` | 375 | 375 | 0 | 1 条（故意的 404 请求） |
-
-- 图片：3 张，全部带 `alt`；WebP 单张最大 143.3 KB。
-- 语义化标签：`header` / `nav` / `main` / `section` / `article` / `footer` 均已使用。
-- 交互自测：筛选切换、菜单开合、计时器 5 分钟开始→暂停→重置均正常；`fetch` 成功后「现在」卡片内容被更新。
-- 线上地址实测（2026-11-13）：首页 / 项目页返回 200，375px 下 `scrollWidth` 均为 375；正常页面 0 条控制台报错；`/this-page-does-not-exist.html` 返回 404 并显示自定义错误页。
-
-重新生成截图与抓包记录（可选，需要本机 Edge 与 Node 22+）：
-
-```bash
-# 终端 1：本地服务器
-python serve.py
-
-# 终端 2：启动带调试端口的 Edge
-"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" ^
-  --headless=new --remote-debugging-port=9222 ^
-  --user-data-dir=.tmp-browser/capture about:blank
-
-# 终端 3：采集
-node scripts/capture.mjs
+```powershell
+cd web-phase4-api-lihaoze
+.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
+当前 **32 个测试全部通过**：CRUD、校验、CORS、聊天参数、SSE mock、上下文截断、401/429/超时、工具写库/查询/参数错误。
+
+## 页面地图
+
+| 页面 | 作用 |
+| --- | --- |
+| `app.html` | 任务 6 整合页：任务清单 + AI + 工具日志 |
+| `tasks.html` | 单独的任务 CRUD 联调页 |
+| `chat.html` | 单独的流式对话 + 工具页 |
+| `index.html` | 个人主页 |
+| `project.html` | 项目档案与专注计时器 |
+| `404.html` | 自定义 404 |
+
 ---
 
-## 可以改的地方
-
-- 姓名、简介、社交链接：`index.html`、`project.html`、`404.html` 中的「李昊泽」与 `https://github.com/lihaoze-star`。
-- 「现在」卡片：修改 `data/now.json`，刷新页面即可看到变化。
-- 主题色与字体：`css/style.css` 顶部的 `:root` 变量。
-- 项目封面：替换 `assets/img/*.webp`，保持单张 ≤ 300 KB。
-
----
-
-## 说明
-
-- 本项目是第一阶段作业，页面内容为个人学习作品集。
-- 404 演示入口在 `project.html` 的「亲自走丢一次」，它会打开一个真实返回 404 的地址。
-- 截图与抓包数据由 `scripts/capture.mjs` 通过 Chrome DevTools Protocol 生成；`docs/network-capture.json` 保留了原始事件，方便核对。
+手写 HTML / CSS / JS，无框架、无构建步骤。李昊泽 · 2026。

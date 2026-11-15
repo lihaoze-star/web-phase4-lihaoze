@@ -311,5 +311,9 @@
     }
   });
 
+  document.addEventListener("tasks:changed", function () {
+    loadTasks({ quiet: true });
+  });
+
   loadTasks();
 })();

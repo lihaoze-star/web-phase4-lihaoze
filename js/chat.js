@@ -175,6 +175,11 @@
     toolCalls += 1;
     if (toolCount) toolCount.textContent = String(toolCalls);
     setStatus("工具 " + call.name + " 已执行，正在整理回答…");
+
+    // Let the task list on the same page refresh when AI writes through a tool.
+    document.dispatchEvent(new CustomEvent("tasks:changed", {
+      detail: { name: call.name, result: call.result || null }
+    }));
   }
 
   function setStreaming(next) {
