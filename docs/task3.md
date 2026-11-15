@@ -5,7 +5,7 @@
 - **在线页面**：<https://lihaoze-star.github.io/web-phase4-lihaoze/tasks.html>
 - **前端仓库**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
 - **API 仓库**：<https://github.com/lihaoze-star/web-phase4-api-lihaoze>
-- **公网 API**：`https://3a81099704b5d7.app.lhr.life`（localhost.run 临时隧道）
+- **公网 API**：`https://8943aa61effd88.app.lhr.life`（localhost.run 临时隧道）
 - **接口文档**：[任务 2 接口文档](https://github.com/lihaoze-star/web-phase4-api-lihaoze/blob/main/docs/api.md)
 
 ## 这一页做了什么
@@ -27,7 +27,7 @@
 window.TASK_API_CONFIG = {
   baseUrl: isLocal
     ? "http://127.0.0.1:5000"
-    : "https://3a81099704b5d7.app.lhr.life",
+    : "https://8943aa61effd88.app.lhr.life",
   timeoutMs: 8000
 };
 ```
