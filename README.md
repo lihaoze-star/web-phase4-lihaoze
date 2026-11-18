@@ -7,8 +7,8 @@
 - **对话页（单独看流式）**：<https://lihaoze-star.github.io/web-phase4-lihaoze/chat.html>
 - **前端仓库**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
 - **API 仓库**：<https://github.com/lihaoze-star/web-phase4-api-lihaoze>
-- **2 分钟演示**：[docs/demo.mp4](docs/demo.mp4)
-- **演示封面**：[docs/screenshots/demo-poster.png](docs/screenshots/demo-poster.png)
+- **2 分钟演示**：<https://lihaoze-star.github.io/web-phase4-lihaoze/docs/demo.mp4>
+- **演示封面**：<https://lihaoze-star.github.io/web-phase4-lihaoze/docs/screenshots/demo-poster.png>
 
 ![整合页](docs/screenshots/app-integrated.png)
 
@@ -247,11 +247,11 @@ web-phase4-api-lihaoze/             # 后端（Flask）
 
 ## 2 分钟演示
 
-[![演示封面](docs/screenshots/demo-poster.png)](docs/demo.mp4)
+[![演示封面](https://lihaoze-star.github.io/web-phase4-lihaoze/docs/screenshots/demo-poster.png)](https://lihaoze-star.github.io/web-phase4-lihaoze/docs/demo.mp4)
 
 结构：问题背景 → 手动 CRUD → 自然语言工具调用 → 工具日志/列表自动刷新 → 技术栈 → 踩过的坑。
 
-- [docs/demo.mp4](docs/demo.mp4)（约 2 分钟，1280×800）
+- <https://lihaoze-star.github.io/web-phase4-lihaoze/docs/demo.mp4>（约 2 分钟，1280×800）
 - [docs/task5.md](docs/task5.md)：工具调用完整链路与失败案例
 - [docs/task4.md](docs/task4.md)：流式、上下文、Key 证明
 - [docs/task3.md](docs/task3.md)：前后端联调与三态
