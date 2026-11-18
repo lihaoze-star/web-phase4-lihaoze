@@ -3,7 +3,7 @@
 在任务 4 的流式对话页上接了两个工具：`add_item` 和 `query_items`，它们直接操作任务 2 的 SQLite 数据库。
 
 - **在线页面**：<https://lihaoze-star.github.io/web-phase4-lihaoze/chat.html>
-- **公网 API**：`https://listen-land-instantly-plugins.trycloudflare.com/api/chat`（Cloudflare Quick Tunnel 临时隧道）
+- **公网 API**：`https://ciao-charging-census-cattle.trycloudflare.com/api/chat`（Cloudflare Quick Tunnel 临时隧道）
 - **工具定义代码**：[app.py](https://github.com/lihaoze-star/web-phase4-api-lihaoze/blob/main/app.py) 的 `TOOLS`、`execute_tool`
 - **完整调用链截图**：[tool-chain.png](screenshots/tool-chain.png)
 - **前后数据**：[tool-before.png](screenshots/tool-before.png) → [tool-after.png](screenshots/tool-after.png)
