@@ -5,7 +5,7 @@
 - **在线页面**：<https://lihaoze-star.github.io/web-phase4-lihaoze/tasks.html>
 - **前端仓库**：<https://github.com/lihaoze-star/web-phase4-lihaoze>
 - **API 仓库**：<https://github.com/lihaoze-star/web-phase4-api-lihaoze>
-- **公网 API**：`https://pci-purpose-quizzes-south.trycloudflare.com`（Cloudflare Quick Tunnel 临时隧道）
+- **公网 API**：`https://portions-smell-instruction-promising.trycloudflare.com`（Cloudflare Quick Tunnel 临时隧道）
 - **接口文档**：[任务 2 接口文档](https://github.com/lihaoze-star/web-phase4-api-lihaoze/blob/main/docs/api.md)
 
 ## 这一页做了什么
@@ -27,7 +27,7 @@
 window.TASK_API_CONFIG = {
   baseUrl: isLocal
     ? "http://127.0.0.1:5000"
-    : "https://pci-purpose-quizzes-south.trycloudflare.com",
+    : "https://portions-smell-instruction-promising.trycloudflare.com",
   timeoutMs: 8000
 };
 ```
