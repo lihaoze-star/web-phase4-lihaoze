@@ -77,6 +77,8 @@ app.html
 
 ## 本地运行（约 10 分钟）
 
+> **Windows 一键启动**：确认 `web-phase4-api-lihaoze` 和 `web-phase4-lihaoze` 在同一个目录、API 的 `.venv` 已创建后，双击根目录的 `start-local.bat`，会同时启动 API 和前端并打开 `app.html`。
+
 ### 1. 准备
 
 - Python 3.10+（开发环境 3.12）
