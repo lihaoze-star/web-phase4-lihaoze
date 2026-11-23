@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>和小岸聊聊 / 李昊泽 — 流式对话与工具调用</title>
+  <meta name="description" content="任务 4/5：后端转发 DeepSeek，流式输出、三轮上下文、停止生成，以及 add_item / query_items 工具调用。">
+  <meta name="theme-color" content="#f2eee5">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <script>window.TASK_API_BASE_URL = "https://chicago-recreation-realized-trek.trycloudflare.com";</script>
+  <script src="js/config.js?v=20261123-live" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/chat.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="李昊泽的个人主页">
+        <span class="brand-mark">HZ</span><span class="brand-dot" aria-hidden="true">.</span>
+      </a>
+
+      <nav class="site-nav" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="project.html">项目</a>
+        <a href="tasks.html">任务</a>
+        <a href="app.html">应用</a>
+        <a href="chat.html" aria-current="page">对话</a>
+        <a href="index.html#about">关于</a>
+      </nav>
+
+      <a class="header-cta" href="index.html#contact">联系我 <span aria-hidden="true">↗</span></a>
+
+      <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false">
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="sr-only">打开菜单</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="site-menu" hidden>
+    <nav aria-label="移动端导航">
+      <a href="index.html"><span>首页</span><small>HOME</small></a>
+      <a href="project.html"><span>项目</span><small>WORK</small></a>
+      <a href="tasks.html"><span>任务</span><small>API</small></a>
+      <a href="app.html"><span>应用</span><small>ONE APP</small></a>
+      <a href="chat.html" aria-current="page"><span>对话</span><small>LLM</small></a>
+      <a href="index.html#about"><span>关于</span><small>ABOUT</small></a>
+      <a href="index.html#contact"><span>联系</span><small>CONTACT</small></a>
+    </nav>
+    <p class="mobile-menu-foot">李昊泽 · 前端学习者<br>中国 / UTC+8 · 2026</p>
+  </div>
+
+  <main id="main">
+    <section class="chat-hero" aria-labelledby="chat-title">
+      <div class="container">
+        <div class="chat-hero-grid">
+          <div>
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span>STREAMING + TOOLS / TASK 04–05</p>
+            <h1 id="chat-title">和模型，<br><em>聊一会儿。</em></h1>
+          </div>
+          <div class="chat-hero-copy">
+            <p class="lead">Key 只放在 Flask 服务端的 <code>.env</code> 里。浏览器只拿到流式的 delta，一段一段显示；小岸还能调用 <code>add_item</code> / <code>query_items</code> 直接改任务清单，右侧日志会看到工具名和参数。</p>
+            <p class="chat-api-line">
+              <span class="chat-api-dot" aria-hidden="true"></span>
+              <span>API</span>
+              <code data-api-url>读取配置中…</code>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chat-section" aria-labelledby="chat-panel-title">
+      <div class="container chat-layout">
+        <div class="chat-shell">
+          <header class="chat-bar">
+            <div class="chat-identity">
+              <span class="chat-avatar" aria-hidden="true">岸</span>
+              <div>
+                <h2 id="chat-panel-title">小岸 <span>课程学习助手</span></h2>
+                <p class="chat-status" data-chat-status aria-live="polite">可以开始提问了。</p>
+              </div>
+            </div>
+            <button class="chat-clear" type="button" data-clear>清空对话</button>
+          </header>
+
+          <div class="chat-log" data-chat-log aria-live="polite" aria-busy="false">
+            <article class="chat-message chat-message--assistant">
+              <div class="chat-message-head"><span class="chat-avatar chat-avatar--small" aria-hidden="true">岸</span><span>小岸</span><time>刚刚</time></div>
+              <div class="chat-bubble">
+                <p>你好，我是小岸。可以问我 <code>fetch</code>、CORS、SQLite，或者这周五个任务里的任何一步。</p>
+                <p>回答会流式出现，随时可以按“停止生成”。</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="chat-error" data-chat-error role="alert" hidden>
+            <div>
+              <strong>这一轮没有成功</strong>
+              <p data-error-text></p>
+            </div>
+            <button class="chat-retry" type="button" data-retry>重试 <span aria-hidden="true">↻</span></button>
+          </div>
+
+          <form class="chat-composer" data-chat-form>
+            <label class="sr-only" for="chat-input">输入问题</label>
+            <textarea id="chat-input" name="message" rows="3" maxlength="2000" placeholder="问点什么……（Enter 发送，Shift + Enter 换行）" required></textarea>
+            <div class="chat-composer-foot">
+              <span class="chat-count" data-chat-count>0 / 2000</span>
+              <div class="chat-composer-actions">
+                <button class="chat-stop" type="button" data-stop disabled>停止生成</button>
+                <button class="button button--primary" type="submit" data-send>发送 <span aria-hidden="true">↗</span></button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <aside class="chat-side" aria-label="上下文与限制">
+          <p class="eyebrow">CONTEXT / LIMITS</p>
+          <h3>上下文有上限。</h3>
+          <p>对话历史从浏览器发到服务端，服务端按 <code>MAX_CONTEXT_CHARS</code> 截断：超过总长度时先丢最早的消息，保留最近几轮。</p>
+
+          <dl class="chat-meta">
+            <div><dt>模型</dt><dd>DeepSeek · 流式</dd></div>
+            <div><dt>上下文</dt><dd>6000 字上限</dd></div>
+            <div><dt>系统提示</dt><dd>课程学习助手</dd></div>
+            <div><dt>Key</dt><dd>仅服务端 <code>.env</code></dd></div>
+          </dl>
+
+          <p class="chat-side-note">系统提示词把角色限定在课程学习与技术问题上，并明确“不编造、不泄露 Key、不代写整份作业”。</p>
+
+          <section class="chat-tools" aria-labelledby="tool-log-title">
+            <div class="chat-tools-head">
+              <p class="eyebrow" id="tool-log-title">TOOL CALLS / 工具日志</p>
+              <span class="chat-tool-count" data-tool-count>0</span>
+            </div>
+            <div class="chat-tool-log" data-tool-log aria-live="polite">
+              <p class="chat-tool-empty" data-tool-empty>还没有工具调用。试试“帮我加一条明天交实验报告”。</p>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 李昊泽</p>
+      <p>手写 HTML / CSS / JS · 无框架</p>
+      <p>本地时间 <time data-clock>UTC+8</time></p>
+    </div>
+  </footer>
+</body>
+</html>

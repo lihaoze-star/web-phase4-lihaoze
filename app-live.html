@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>一个应用，四件事 / 李昊泽 — 任务 CRUD + AI 工具调用</title>
+  <meta name="description" content="任务 6 整合页：一个页面同时操作任务清单和 AI 助手；页面、Flask 接口、SQLite 数据库、DeepSeek 工具调用互相打通。">
+  <meta name="theme-color" content="#f2eee5">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/tasks.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/app.css">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <script>window.TASK_API_BASE_URL = "https://chicago-recreation-realized-trek.trycloudflare.com";</script>
+  <script src="js/config.js?v=20261123-live" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/tasks.js" defer></script>
+  <script src="js/chat.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="李昊泽的个人主页">
+        <span class="brand-mark">HZ</span><span class="brand-dot" aria-hidden="true">.</span>
+      </a>
+
+      <nav class="site-nav" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="project.html">项目</a>
+        <a href="tasks.html">任务</a>
+        <a href="app.html" aria-current="page">应用</a>
+        <a href="chat.html">对话</a>
+        <a href="index.html#about">关于</a>
+      </nav>
+
+      <a class="header-cta" href="index.html#contact">联系我 <span aria-hidden="true">↗</span></a>
+
+      <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false">
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="sr-only">打开菜单</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="site-menu" hidden>
+    <nav aria-label="移动端导航">
+      <a href="index.html"><span>首页</span><small>HOME</small></a>
+      <a href="project.html"><span>项目</span><small>WORK</small></a>
+      <a href="tasks.html"><span>任务</span><small>API</small></a>
+      <a href="app.html" aria-current="page"><span>应用</span><small>ONE APP</small></a>
+      <a href="chat.html"><span>对话</span><small>LLM</small></a>
+      <a href="index.html#about"><span>关于</span><small>ABOUT</small></a>
+      <a href="index.html#contact"><span>联系</span><small>CONTACT</small></a>
+    </nav>
+    <p class="mobile-menu-foot">李昊泽 · 前端学习者<br>中国 / UTC+8 · 2026</p>
+  </div>
+
+  <main id="main">
+    <section class="app-hero" aria-labelledby="app-title">
+      <div class="container">
+        <div class="app-hero-grid">
+          <div>
+            <p class="eyebrow"><span class="dot" aria-hidden="true"></span>ONE APP / TASK 06</p>
+            <h1 id="app-title">一个页面，<br><em>四件事打通。</em></h1>
+          </div>
+          <div class="app-hero-copy">
+            <p class="lead">左边是任务清单，右边是小岸。清单可以手动改，也可以直接说“帮我加一条…”，模型调用工具写进同一个 SQLite；工具日志和列表会同时更新。</p>
+            <p class="app-api-line">
+              <span class="app-api-dot" aria-hidden="true"></span>
+              <span>API</span>
+              <code data-api-url>读取配置中…</code>
+            </p>
+          </div>
+        </div>
+
+        <div class="app-flow" aria-label="应用的四层">
+          <span><b>01</b> app.html · 一个页面</span>
+          <span><b>02</b> Flask /api · 一套接口</span>
+          <span><b>03</b> tasks.db · 一个数据库</span>
+          <span><b>04</b> DeepSeek tools · 一个 AI 能力</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-section" aria-label="任务清单与 AI 助手">
+      <div class="container app-grid">
+        <div class="app-col app-col--tasks">
+          <div class="task-panel">
+            <header class="task-panel-head">
+              <div>
+                <p class="eyebrow eyebrow--light"><span class="dot" aria-hidden="true"></span>TASKS / SQLITE</p>
+                <h2>今天要做什么</h2>
+              </div>
+              <p class="task-counter"><strong data-task-count>—</strong><span>条任务</span></p>
+            </header>
+
+            <form class="task-form" data-task-form novalidate>
+              <label class="sr-only" for="task-title">任务标题</label>
+              <input id="task-title" name="title" type="text" maxlength="80" placeholder="写一件要完成的事…" autocomplete="off" required>
+              <button class="button button--primary" type="submit">
+                <span data-submit-label>添加任务</span>
+                <span aria-hidden="true">↗</span>
+              </button>
+            </form>
+            <p class="task-form-error" data-form-error role="alert" hidden></p>
+
+            <div class="task-toolbar">
+              <p class="task-status" data-task-status aria-live="polite">准备读取…</p>
+              <button class="task-refresh" type="button" data-refresh>刷新 <span aria-hidden="true">↻</span></button>
+            </div>
+
+            <div class="task-view" data-task-view aria-live="polite" aria-busy="true"></div>
+          </div>
+
+          <p class="app-note">手动新增、勾选完成、删除，和 AI 的工具调用走的是同一个 <code>/api/tasks</code> 与同一张 <code>tasks</code> 表。</p>
+        </div>
+
+        <div class="app-col app-col--chat">
+          <div class="chat-shell">
+            <header class="chat-bar">
+              <div class="chat-identity">
+                <span class="chat-avatar" aria-hidden="true">岸</span>
+                <div>
+                  <h2>小岸 <span>课程学习助手</span></h2>
+                  <p class="chat-status" data-chat-status aria-live="polite">可以开始提问了。</p>
+                </div>
+              </div>
+              <button class="chat-clear" type="button" data-clear>清空对话</button>
+            </header>
+
+            <div class="chat-log" data-chat-log aria-live="polite" aria-busy="false">
+              <article class="chat-message chat-message--assistant">
+                <div class="chat-message-head"><span class="chat-avatar chat-avatar--small" aria-hidden="true">岸</span><span>小岸</span><time>刚刚</time></div>
+                <div class="chat-bubble">
+                  <p>试试「帮我加一条明天交实验报告」，或者「查一下有哪些未完成的任务」。</p>
+                  <p>我会直接调用工具改左边的清单。</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="chat-error" data-chat-error role="alert" hidden>
+              <div>
+                <strong>这一轮没有成功</strong>
+                <p data-error-text></p>
+              </div>
+              <button class="chat-retry" type="button" data-retry>重试 <span aria-hidden="true">↻</span></button>
+            </div>
+
+            <form class="chat-composer" data-chat-form>
+              <label class="sr-only" for="chat-input">输入问题</label>
+              <textarea id="chat-input" name="message" rows="2" maxlength="2000" placeholder="问点什么，或直接让我改清单…（Enter 发送，Shift + Enter 换行）" required></textarea>
+              <div class="chat-composer-foot">
+                <span class="chat-count" data-chat-count>0 / 2000</span>
+                <div class="chat-composer-actions">
+                  <button class="chat-stop" type="button" data-stop disabled>停止生成</button>
+                  <button class="button button--primary" type="submit" data-send>发送 <span aria-hidden="true">↗</span></button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <section class="app-tool-panel" aria-labelledby="app-tool-title">
+            <div class="chat-tools-head">
+              <p class="eyebrow" id="app-tool-title">TOOL CALLS / 模型刚做了什么</p>
+              <span class="chat-tool-count" data-tool-count>0</span>
+            </div>
+            <div class="chat-tool-log" data-tool-log aria-live="polite">
+              <p class="chat-tool-empty" data-tool-empty>还没有工具调用。说一句和清单有关的话试试。</p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 李昊泽</p>
+      <p>手写 HTML / CSS / JS · 无框架</p>
+      <p>本地时间 <time data-clock>UTC+8</time></p>
+    </div>
+  </footer>
+</body>
+</html>
