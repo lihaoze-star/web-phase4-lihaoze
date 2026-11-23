@@ -16,7 +16,7 @@
     // 当前公网 API 由 localhost.run 隧道暴露，换地址时只改这一行。
     baseUrl: isLocal
       ? "http://127.0.0.1:5000"
-      : "https://portions-smell-instruction-promising.trycloudflare.com",
+      : "https://chicago-recreation-realized-trek.trycloudflare.com",
     timeoutMs: 8000
   };
 
