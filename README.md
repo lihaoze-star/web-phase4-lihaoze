@@ -9,6 +9,7 @@
 - **API 仓库**：<https://github.com/lihaoze-star/web-phase4-api-lihaoze>
 - **2 分钟演示**：<https://lihaoze-star.github.io/web-phase4-lihaoze/docs/demo.mp4>
 - **演示封面**：<https://lihaoze-star.github.io/web-phase4-lihaoze/docs/screenshots/demo-poster.png>
+- **重做验收记录**：[docs/acceptance.md](docs/acceptance.md)
 
 ![整合页](docs/screenshots/app-integrated.png)
 
@@ -57,7 +58,7 @@
 | 数据库 | SQLite (`tasks.db`) | 单用户课程项目，零配置、文件持久化、支持 SQL 查询 |
 | AI | DeepSeek `deepseek-chat` | OpenAI 兼容接口，支持 SSE 与 function calling |
 | 部署 | GitHub Pages + Cloudflare Quick Tunnel | 前端静态托管；本地 API 用临时公网地址 |
-| 测试 | Python `unittest` | 32 个后端测试，含工具参数校验 |
+| 测试 | Python `unittest` | 33 个后端测试，含工具参数校验 |
 
 ## 架构
 
@@ -222,7 +223,7 @@ web-phase4-lihaoze/                 # 前端（GitHub Pages）
 web-phase4-api-lihaoze/             # 后端（Flask）
 ├── app.py                          # 路由、校验、CORS、SQLite、SSE、tools
 ├── data/tasks.db                   # 运行时数据库（gitignore）
-├── tests/test_api.py               # 32 个 unittest
+├── tests/test_api.py               # 33 个 unittest
 ├── requirements.txt
 ├── .env.example                    # 环境变量模板
 ├── Procfile / render.yaml          # Render 部署
@@ -281,7 +282,7 @@ cd web-phase4-api-lihaoze
 .venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-当前 **32 个测试全部通过**：CRUD、校验、CORS、聊天参数、SSE mock、上下文截断、401/429/超时、工具写库/查询/参数错误。
+当前 **33 个测试全部通过**：CRUD、校验、CORS、聊天参数、SSE mock、上下文截断、401/429/超时、工具写库/查询/参数错误。
 
 ## 页面地图
 
